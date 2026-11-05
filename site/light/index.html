@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding Light &amp; Colour — why the sky is blue and sunsets are red</title>
+<meta name="description" content="An interactive guide to light and colour: why the sky is blue, sunsets red and clouds white, how rainbows work, why the sea is blue, and what colour really is.">
+<link rel="canonical" href="https://mklasen.github.io/understanding-nature/light/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b0912">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Understanding Nature">
+<meta property="og:title" content="Why is the sky blue — and sunsets red? · Understanding Light &amp; Colour">
+<meta property="og:description" content="Move the Sun and watch a computed sky turn from blue to sunset. Rainbows, clouds, the sea, soap bubbles and your own eyes — and see how it all really works.">
+<meta property="og:url" content="https://mklasen.github.io/understanding-nature/light/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../kit/kit.css">
+<link rel="stylesheet" href="css/light.css">
+</head>
+<body data-theme="light" data-explainer="light" data-root="../">
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <canvas id="hero-sky" aria-label="A computed sky. Move the Sun to see it change from blue to sunset."></canvas>
+  <div class="hero-copy">
+    <p class="kicker">An interactive guide to light and colour</p>
+    <h1>Why is the sky blue —<br>and sunsets red?</h1>
+    <p class="lede">It's the same answer twice. Move the Sun and watch. Then take light apart: rainbows, white clouds, the blue sea, soap bubbles, and the colours that exist only in your head.</p>
+  </div>
+  <div class="hero-caption">
+    <label class="ctl">
+      <span class="ctl-label">Sun height <output id="hero-sun-out">30°</output></span>
+      <input type="range" id="hero-sun" min="-8" max="55" step="0.1" value="30" aria-label="Height of the Sun above the horizon">
+    </label>
+    <p class="hero-read" id="hero-read"></p>
+    <div class="btn-row"><button class="btn ghost small" id="hero-play">▶ Play a sunset</button></div>
+    <p class="hero-note">This sky is <b>computed, not painted</b>: sunlight at 17 wavelengths scattering off air and haze in a 100 km atmosphere. Exposure adapts like your eyes do.</p>
+  </div>
+  <a class="scroll-cue" href="#spectrum">Begin <span>↓</span></a>
+</header>
+
+<nav class="toc" aria-label="Chapters">
+  <a href="#spectrum"><i>1</i>White is every colour</a>
+  <a href="#sky"><i>2</i>Why the sky is blue</a>
+  <a href="#sunset"><i>3</i>Red sunsets</a>
+  <a href="#clouds"><i>4</i>White clouds</a>
+  <a href="#rainbow"><i>5</i>Rainbows</a>
+  <a href="#sea"><i>6</i>The blue sea</a>
+  <a href="#films"><i>7</i>Light is a wave</a>
+  <a href="#cones"><i>8</i>Colour is in your head</a>
+  <a href="#summary"><i>9</i>Five tricks of light</a>
+</nav>
+
+<main>
+
+<!-- ============ 1. SPECTRUM ============ -->
+<section class="chapter" id="spectrum">
+  <div class="text">
+    <p class="num">1</p>
+    <h2>White light is every colour at once</h2>
+    <p>Sunlight looks white, but it isn't one colour. It's a mixture of every colour of the rainbow, all arriving together. Isaac Newton showed this in 1666 with a glass prism in a darkened room.</p>
+    <p>Glass slows light down, and it slows short (violet, blue) waves slightly more than long (red) ones. So each colour bends by a slightly different amount, and the white beam fans out into a <strong>spectrum</strong>.</p>
+    <p>Newton's real trick was the second half. Gather the colours back together with a lens and you get <em>white</em> again. The glass didn't add colour. It sorted colours that were already there.</p>
+    <p class="try">Tap colours on the card to block them, then look at the light that gets put back together. Block the blue and you get yellow, though no yellow light was added.</p>
+    <aside class="aha">
+      <p>The colour of almost everything around you comes from <strong>which parts of this mixture survive</strong>. A red apple swallows most of the blue and green and sends back the red. The rest of this guide is about how air, water, raindrops and soap films do the sorting.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="prism-canvas" class="panel-canvas medium" aria-label="A prism splitting white light into a spectrum, and a lens recombining it"></canvas>
+    <div class="btn-row">
+      <button class="btn ghost small" data-prism="all">Let everything through</button>
+      <button class="btn ghost small" data-prism="noblue">Block blue</button>
+      <button class="btn ghost small" data-prism="nogreen">Block green</button>
+      <button class="btn ghost small" data-prism="red">Only red</button>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">Recombined light</span><span class="ro-value" id="prism-mix">white</span></div>
+      <div><span class="ro-label">Colours let through</span><span class="ro-value small" id="prism-kept">all of them</span></div>
+      <div><span class="ro-label">Spread, red to violet</span><span class="ro-value" id="prism-spread">–</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. SKY ============ -->
+<section class="chapter" id="sky">
+  <div class="text">
+    <p class="num">2</p>
+    <h2>Why the sky is blue</h2>
+    <p>Air is mostly nitrogen and oxygen molecules, spaced far apart. When sunlight passes one, the molecule's electrons are shaken by the light's electric field and re-radiate a little of it in every direction. That's <strong>scattering</strong>, and it's what fills the sky with light.</p>
+    <p>Molecules are thousands of times smaller than a wavelength of light, and for anything that small the scattering depends very steeply on colour: it goes as <strong>1 / wavelength⁴</strong>. Blue light (450 nm) has a wavelength about ⅔ that of red (650 nm), so it scatters more than <strong>4 times</strong> as much.</p>
+    <p>So wherever you look away from the Sun, you're seeing sunlight that's been bounced toward you by air, and that light is mostly the blue part. Without air there's nothing to scatter it, which is why the sky on the Moon is black even at noon.</p>
+    <p class="try">Turn the colour-dependence down to zero and the sky goes white. Then try the Moon.</p>
+    <aside class="aha">
+      <p><strong>Why not violet?</strong> Violet scatters even more than blue, and the graph shows it. But sunlight contains less violet to begin with, and your eyes are much less sensitive to it. The mixture of scattered light, mostly violet and blue with some of everything else, adds up to the pale sky-blue you know.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="sky-canvas" class="panel-canvas tall" aria-label="A computed sky and a graph of sunlight and skylight across the spectrum"></canvas>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">How much more blue scatters than red <output id="sky-n-out"></output></span>
+        <input type="range" id="sky-n" min="0" max="6" step="0.1" value="4">
+        <span class="ctl-note">Real air: 1 / wavelength<sup>4</sup>. Any other setting is a thought experiment.</span>
+      </label>
+      <div class="btn-row">
+        <button class="btn ghost small" id="sky-real">Real air (λ⁻⁴)</button>
+        <button class="btn ghost small" id="sky-moon">No air: the Moon</button>
+      </div>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">Blue vs red scattered</span><span class="ro-value" id="sky-ratio">–</span></div>
+      <div><span class="ro-label">Sky colour</span><span class="ro-value small" id="sky-col">–</span></div>
+      <div><span class="ro-label">Sky brightness</span><span class="ro-value small" id="sky-bright">–</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. SUNSET ============ -->
+<section class="chapter" id="sunset">
+  <div class="text">
+    <p class="num">3</p>
+    <h2>Why sunsets are red</h2>
+    <p>Same air, same scattering, seen from the other side. Every bit of blue scattered <em>out</em> of the sunbeam to make the sky blue is blue the beam has lost. At noon the light crosses the equivalent of only about 8 km of sea-level air, loses a little blue, and the Sun looks white.</p>
+    <p>Near the horizon, sunlight skims through the atmosphere sideways and crosses about <strong>40 times as much air</strong>. By the time it reaches you almost all the blue and green have been scattered away somewhere else. Somewhere else, they're making someone's blue sky. What's left is orange and red, and it lights the clouds and the haze from below.</p>
+    <p>Dust and smoke strengthen the effect. That's why sunsets after wildfires or volcanic eruptions can be blood-red.</p>
+    <p class="try">Lower the Sun and watch the beam lose its blue along the way. Then add smoke.</p>
+    <aside class="aha">
+      <p>The blue sky and the red sunset are <strong>one process</strong>. Scattering takes blue out of the direct sunbeam and spreads it across the sky. Look away from the Sun and you see what was taken; look at the low Sun and you see what was left.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="sunset-canvas" class="panel-canvas tall" aria-label="A side view of sunlight crossing the atmosphere, and the colour of the Sun"></canvas>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Sun height <output id="sunset-e-out"></output></span>
+        <input type="range" id="sunset-e" min="-1" max="60" step="0.1" value="20">
+      </label>
+      <label class="ctl">
+        <span class="ctl-label">Haze, dust and smoke <output id="sunset-a-out"></output></span>
+        <input type="range" id="sunset-a" min="0" max="1" step="0.001" value="0.3">
+      </label>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">Air crossed</span><span class="ro-value" id="sunset-air">–</span></div>
+      <div><span class="ro-label">Blue that gets through</span><span class="ro-value" id="sunset-blue">–</span></div>
+      <div><span class="ro-label">Red that gets through</span><span class="ro-value" id="sunset-red">–</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. CLOUDS ============ -->
+<section class="chapter" id="clouds">
+  <div class="text">
+    <p class="num">4</p>
+    <h2>Why clouds are white</h2>
+    <p>If air scatters blue, why aren't clouds blue? Because cloud droplets aren't small. A typical droplet is about 10 µm across, around <strong>twenty times longer than a wavelength of light</strong>.</p>
+    <p>Light meets something that large and simply bounces and bends off and through it, the way it does off a glass bead. The ripple-by-ripple shaking that made blue special no longer happens. Every colour scatters about equally, so the scattered light stays the colour of sunlight, which is <strong>white</strong>.</p>
+    <p>In between are particles about the size of a wavelength: fine smoke, sea-salt haze, pollen. They scatter colours unevenly in more complicated ways, which is why haze looks milky and smoke can look bluish against a dark background.</p>
+    <p class="try">Grow the particle from a speck to a cloud droplet and watch the scattered colour drain from blue to white.</p>
+    <aside class="aha">
+      <p>The material hardly matters. A water droplet shrunk small enough would scatter blue just like a nitrogen molecule. What sets the colour is <strong>size compared with the wavelength</strong>. And a cloud's grey base is the same white light, just thinned out after passing through a kilometre of droplets above it.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="clouds-canvas" class="panel-canvas medium" aria-label="A particle compared with a light wave, and how strongly it scatters each colour"></canvas>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Particle size (radius) <output id="clouds-r-out"></output></span>
+        <input type="range" id="clouds-r" min="0" max="1" step="0.001" value="0.05">
+      </label>
+      <div class="btn-row">
+        <button class="btn ghost small" data-cloud="0.0005">Air-sized speck</button>
+        <button class="btn ghost small" data-cloud="0.25">Fine smoke</button>
+        <button class="btn ghost small" data-cloud="5">Cloud droplet</button>
+      </div>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">Size vs wavelength</span><span class="ro-value" id="clouds-x">–</span></div>
+      <div><span class="ro-label">Blue vs red scattered</span><span class="ro-value" id="clouds-ratio">–</span></div>
+      <div><span class="ro-label">Scattered light looks</span><span class="ro-value small" id="clouds-look">–</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. RAINBOW ============ -->
+<section class="chapter" id="rainbow">
+  <div class="text">
+    <p class="num">5</p>
+    <h2>Rainbows: 42 degrees from your shadow</h2>
+    <p>A rainbow isn't an object hanging somewhere. It's a <strong>direction</strong>. Each raindrop takes in sunlight, bends it on the way in, reflects it off its back wall, and bends it again on the way out.</p>
+    <p>Light can come out at many angles, but the exits <strong>pile up</strong> at one particular angle, about 42° from the direction of the incoming sunlight. That's where the bright bow is. Water bends violet slightly more than red, so violet piles up at 40.6° and red at 42.3°. That's why the colours are always in the same order, red on the outside.</p>
+    <p>So the bow is a circle 42° around the point exactly opposite the Sun, which is where the shadow of your head falls. Everyone sees their own rainbow, made by different drops.</p>
+    <p class="try">Aim a ray into the drop and find the angle where it turns back. Then switch on "many rays" and watch them crowd together at 42°.</p>
+    <aside class="aha">
+      <p>Light that bounces <strong>twice</strong> inside the drop makes a fainter second bow at about 51°, with its colours reversed. No light at all comes back from between 42° and 51°, so the sky between the two bows is darker. That's <strong>Alexander's dark band</strong>, and once you know it's there you'll see it every time.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <div class="seg" id="rain-mode" role="tablist">
+      <button class="on" data-mode="drop">Inside a raindrop</button>
+      <button data-mode="sky">In the sky</button>
+    </div>
+    <canvas id="rain-canvas" class="panel-canvas square" aria-label="Light rays inside a raindrop, or a rainbow in the sky"></canvas>
+    <div class="controls" id="rain-drop-ctl">
+      <label class="ctl">
+        <span class="ctl-label">Aim the ray (where it hits the drop) <output id="rain-b-out"></output></span>
+        <input type="range" id="rain-b" min="0" max="0.999" step="0.001" value="0.86">
+      </label>
+      <div class="btn-row toggles">
+        <label class="toggle"><input type="checkbox" id="rain-many"><span>Many rays</span></label>
+        <label class="toggle"><input type="checkbox" id="rain-two"><span>Two reflections</span></label>
+      </div>
+    </div>
+    <div class="controls" id="rain-sky-ctl" hidden>
+      <label class="ctl">
+        <span class="ctl-label">Sun height <output id="rain-e-out"></output></span>
+        <input type="range" id="rain-e" min="0" max="55" step="0.1" value="12">
+      </label>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label" id="rain-l1">Ray turns back by</span><span class="ro-value" id="rain-v1">–</span></div>
+      <div><span class="ro-label" id="rain-l2">Red bow</span><span class="ro-value" id="rain-v2">42.3°</span></div>
+      <div><span class="ro-label" id="rain-l3">Violet bow</span><span class="ro-value" id="rain-v3">40.6°</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. SEA ============ -->
+<section class="chapter" id="sea">
+  <div class="text">
+    <p class="num">6</p>
+    <h2>Why the sea is blue (and sometimes turquoise)</h2>
+    <p>Part of it is the sky's reflection. But dive in and the water itself is blue. Water is very slightly coloured: it <strong>absorbs red light</strong>, weakly but steadily. One metre takes out about a quarter of the red (650 nm). A few metres, most of it. By 30 m there's almost none left.</p>
+    <p>That doesn't come from scattering. Water molecules vibrate, and the vibrations soak up energy at red wavelengths. Water is one of the few things in nature that's blue because of what it <em>absorbs</em>.</p>
+    <p>Over shallow white sand, sunlight goes down, bounces off the bottom, and comes back up. The round trip is short enough that green survives along with the blue, and you get <strong>turquoise</strong>. Over deep water nothing comes back from the bottom, and the only light returning is the faint blue scattered by the water itself, so the sea looks dark, deep blue.</p>
+    <p class="try">Tap anywhere in the water to send a diver down and see which colours are left. Then make the water greener with plankton.</p>
+    <aside class="aha">
+      <p>Divers know this from experience: below 10 m a red wetsuit looks brown and blood looks green, until a torch brings the red back. The colour wasn't lost from the suit; it was lost from the <strong>light</strong> on its way down.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="sea-canvas" class="panel-canvas tall" aria-label="A beach shelving into deep water, seen from above and in cross-section"></canvas>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Plankton in the water <output id="sea-c-out"></output></span>
+        <input type="range" id="sea-c" min="0" max="1" step="0.001" value="0.08">
+      </label>
+      <div class="seg" id="sea-bed">
+        <button class="on" data-bed="sand">Sand</button>
+        <button data-bed="rock">Dark rock</button>
+        <button data-bed="weed">Seagrass</button>
+      </div>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">Diver's depth</span><span class="ro-value" id="sea-d">–</span></div>
+      <div><span class="ro-label">Red light left</span><span class="ro-value" id="sea-red">–</span></div>
+      <div><span class="ro-label">Blue light left</span><span class="ro-value" id="sea-blue">–</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. FILMS ============ -->
+<section class="chapter" id="films">
+  <div class="text">
+    <p class="num">7</p>
+    <h2>Light is a wave: soap bubbles and oil slicks</h2>
+    <p>Where does the swirling colour of a soap bubble come from? There's no dye in it. It comes from the fact that light is a <strong>wave</strong>, about 400 to 700 nanometres from crest to crest.</p>
+    <p>A soap film is only a few hundred nanometres thick. Some light reflects off its front surface and some off its back, and the two reflections <strong>add together</strong>, exactly the way water waves do. If the back reflection has travelled an extra whole wavelength, crest meets crest and that colour is reinforced. If it's half a wavelength out, crest meets trough and that colour cancels.</p>
+    <p>Which colours win depends on the thickness, so as the film drains and thins, the colours flow. Just before it pops it gets thinner than any wavelength, everything cancels, and the film turns <strong>black</strong>.</p>
+    <p class="try">Tap the film to measure it, and watch which colours add up and which cancel. Then switch to a film of oil on a wet road.</p>
+    <aside class="aha">
+      <p>The same adding-up of waves that makes every patch of sea unique paints the bubble. Colour from structure, not pigment, also makes <strong>peacock feathers, morpho butterflies and the inside of shells</strong> shimmer.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <div class="seg" id="film-kind">
+      <button class="on" data-kind="soap">Soap film</button>
+      <button data-kind="oil">Oil on a wet road</button>
+    </div>
+    <canvas id="films-canvas" class="panel-canvas tall" aria-label="A draining soap film and the two reflected light waves"></canvas>
+    <div class="readout grid3">
+      <div><span class="ro-label">Film thickness here</span><span class="ro-value" id="films-d">–</span></div>
+      <div><span class="ro-label">Reinforced</span><span class="ro-value small" id="films-plus">–</span></div>
+      <div><span class="ro-label">Cancelled</span><span class="ro-value small" id="films-minus">–</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. CONES ============ -->
+<section class="chapter" id="cones">
+  <div class="text">
+    <p class="num">8</p>
+    <h2>Colour is in your head</h2>
+    <p>Light comes in a continuous range of wavelengths. Your eye reduces all of that to just <strong>three numbers</strong>. The retina has three kinds of colour-sensing cells, the cones. Each responds to a broad range of wavelengths, peaking in long (L), medium (M) and short (S) light. All your brain receives is how strongly each kind is firing.</p>
+    <p>So two completely different lights look identical if they excite the three cones equally. Mix red and green light and you get yellow that your eye can't tell apart from pure yellow light. Every screen relies on this: your phone shows you "yellow" without ever emitting any.</p>
+    <p>Mix red and blue light, though, and you get a pattern that <strong>no single wavelength</strong> can produce: L and S firing while M is quiet. Your brain makes up a colour for it, magenta. Pink and purple aren't in the rainbow. They exist only in brains.</p>
+    <p class="try">Slide through the rainbow and watch the three cones. Then mix lamps and find a colour that isn't in the spectrum.</p>
+    <aside class="aha">
+      <p>"Colour" isn't a property of light, it's a <strong>conversation between light and a nervous system</strong>. Bees see ultraviolet, mantis shrimp have a dozen receptor types, and some people have only two cone types. Each of them lives in a differently coloured world.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <div class="seg" id="cone-mode">
+      <button class="on" data-mode="one">One wavelength</button>
+      <button data-mode="mix">Mix three lamps</button>
+    </div>
+    <canvas id="cones-canvas" class="panel-canvas medium" aria-label="Sensitivity of the three cone types, and how strongly each responds"></canvas>
+    <div class="controls" id="cone-one">
+      <label class="ctl">
+        <span class="ctl-label">Wavelength <output id="cone-l-out"></output></span>
+        <input type="range" id="cone-l" min="400" max="700" step="1" value="580">
+      </label>
+    </div>
+    <div class="controls three" id="cone-mix" hidden>
+      <label class="ctl"><span class="ctl-label">Red lamp <output id="cone-r-out"></output></span><input type="range" id="cone-r" min="0" max="1" step="0.01" value="1"></label>
+      <label class="ctl"><span class="ctl-label">Green lamp <output id="cone-g-out"></output></span><input type="range" id="cone-g" min="0" max="1" step="0.01" value="0"></label>
+      <label class="ctl"><span class="ctl-label">Blue lamp <output id="cone-b-out"></output></span><input type="range" id="cone-b" min="0" max="1" step="0.01" value="0.8"></label>
+    </div>
+    <div class="readout big">
+      <span class="ro-label">What you see</span>
+      <span class="ro-value" id="cone-name">–</span>
+      <span class="ro-note" id="cone-why"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. SUMMARY ============ -->
+<section class="summary" id="summary">
+  <p class="num">9</p>
+  <h2>Five tricks of light</h2>
+  <div class="cards five">
+    <article class="card c1"><h3>Scattering</h3><p>Tiny molecules scatter blue much more than red (1/λ⁴). That gives the <b>blue sky</b> and, from the other end of the beam, the <b>red sunset</b>. Big droplets scatter all colours alike, so <b>clouds are white</b>.</p></article>
+    <article class="card c2"><h3>Refraction</h3><p>Glass and water slow violet a little more than red, so colours bend apart. That gives the <b>prism's spectrum</b> and the <b>rainbow</b>, 42° from your shadow.</p></article>
+    <article class="card c3"><h3>Absorption</h3><p>Water swallows red light metre by metre. That gives <b>blue water</b>, <b>turquoise shallows</b> and brown wetsuits at 10 m.</p></article>
+    <article class="card c4"><h3>Interference</h3><p>Light is a wave. Reflections from two surfaces add or cancel by colour, which paints <b>soap bubbles</b>, <b>oil slicks</b> and <b>peacock feathers</b>.</p></article>
+    <article class="card c5"><h3>Your eyes</h3><p>Three cone types turn a whole spectrum into three numbers. Different lights can look the same, and <b>magenta</b> exists only in your head.</p></article>
+  </div>
+  <p class="closing">Look up on a clear afternoon and you're seeing sunlight bounced off nitrogen and oxygen molecules. That same light leaves someone else's Sun red as it sets, an hour's spin of the Earth away. The colours were in the light all along; the world only sorts them.</p>
+  <p class="foot">Built with Rayleigh and Mie scattering, Snell's law and Fresnel reflection, measured water absorption and the CIE 1931 observer. Simplified to be felt, accurate enough to teach. <a href="DECISIONS.md">How it's modelled</a>.</p>
+</section>
+
+</main>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

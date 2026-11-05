@@ -1,0 +1,46 @@
+/* light: explainer-specific styles (shared styles live in kit/kit.css) */
+[data-theme="light"] { --sun: #ffd27a; --rayleigh: #8ec5ff; }
+
+/* hero */
+#hero-sky { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: ns-resize; }
+.hero::after { background: linear-gradient(180deg, rgba(var(--bg-rgb), 0.28) 0%, rgba(var(--bg-rgb), 0) 30%, rgba(var(--bg-rgb), 0) 80%, var(--bg) 100%); }
+.hero-caption { max-width: 340px; display: flex; flex-direction: column; gap: 8px; }
+.hero-caption p { margin: 0; }
+.hero-caption .ctl-label { color: rgba(255, 255, 255, 0.85); }
+.hero-read { font-size: 13px; color: rgba(255, 255, 255, 0.9); min-height: 2.8em; }
+.hero-read b { color: #fff; }
+.hero-note { color: rgba(255, 255, 255, 0.68); font-size: 12px; }
+.hero-note b { color: rgba(255, 255, 255, 0.9); font-weight: 600; }
+.btn.small { padding: 6px 12px; font-size: 13px; }
+h1 { text-shadow: 0 2px 30px rgba(10, 10, 30, 0.45); }
+
+.ctl-note sup { font-size: 0.75em; }
+.swatch { display: inline-block; width: 0.9em; height: 0.9em; border-radius: 50%; vertical-align: -0.05em; margin-right: 0.35em; border: 1px solid rgba(255, 255, 255, 0.35); }
+.ro-value .swatch { width: 0.8em; height: 0.8em; }
+.seg { margin-bottom: 2px; }
+.readout.big .ro-value { color: #fff; }
+
+/* summary: five cards */
+.summary { max-width: 1400px; }
+.cards.five { grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.cards.five .card { padding: 20px; }
+.cards.five h3 { font-size: 23px; margin-bottom: 8px; }
+.cards.five p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+.cards.five b { color: #fff; font-weight: 600; }
+.card.c1 { background: linear-gradient(160deg, rgba(142, 197, 255, 0.2), rgba(26, 21, 48, 0.92) 60%); } .card.c1 h3 { color: #8ec5ff; }
+.card.c2 { background: linear-gradient(160deg, rgba(255, 159, 107, 0.2), rgba(26, 21, 48, 0.92) 60%); } .card.c2 h3 { color: #ff9f6b; }
+.card.c3 { background: linear-gradient(160deg, rgba(63, 200, 210, 0.2), rgba(26, 21, 48, 0.92) 60%); } .card.c3 h3 { color: #5fd3d8; }
+.card.c4 { background: linear-gradient(160deg, rgba(220, 140, 255, 0.2), rgba(26, 21, 48, 0.92) 60%); } .card.c4 h3 { color: #d99cff; }
+.card.c5 { background: linear-gradient(160deg, rgba(255, 120, 200, 0.18), rgba(26, 21, 48, 0.92) 60%); } .card.c5 h3 { color: #ff8fcf; }
+@media (max-width: 1200px) { .cards.five { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 960px) { .cards.five { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) {
+  .cards.five { grid-template-columns: 1fr; }
+  .summary { padding: 56px 16px 60px; }
+  .hero-caption { gap: 6px; }
+  .hero-note { font-size: 11.5px; }
+  .hero-read { min-height: 0; font-size: 12.5px; }
+}
+.hero h1 { font-size: clamp(40px, 5.4vw, 76px); }
+.hero-copy { max-width: 780px; }
+.hero .lede { text-shadow: 0 1px 2px rgba(10, 15, 40, 0.8), 0 0 24px rgba(10, 15, 40, 0.6); }
