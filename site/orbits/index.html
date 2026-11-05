@@ -64,15 +64,14 @@
     <p>Day and night are simple: the Earth is a ball lit from one side, and it <strong>spins</strong>. Your side turns into the sunlight (sunrise), across it (noon), and out again (sunset).</p>
     <p>But here's a puzzle. Measure one full turn of the Earth against the distant stars and you get <strong>23 hours 56 minutes</strong>. Yet noon-to-noon takes 24 hours. Where do the extra four minutes come from?</p>
     <p class="after">While the Earth spins, it's also travelling along its orbit. After one full turn, the Sun is no longer quite in the same direction — so the Earth has to turn <em>a little bit more</em> to bring the Sun back overhead.</p>
-    <p class="try">Watch the red dot (you, at noon). Then shrink the year to a handful of days to make the effect huge. Or make the Earth spin the other way, like Venus.</p>
+    <p class="try">Watch the red dot (you, at noon). Then shrink the year to a handful of days to make the effect huge, or make the Earth spin the other way, like Venus. Switch to <em>standing on the equator</em> to watch a star beat the Sun back to the same spot in the sky.</p>
     <aside class="aha">
       <p>In one year the Earth spins about <strong>366¼ times</strong> relative to the stars — but we only see <strong>365¼ sunrises</strong>. Going once around the Sun "uses up" one whole turn.</p>
       <p>Astronomers call the star-to-star turn the <em>sidereal day</em>; our clocks run on the <em>solar day</em>. Both are real. They're just measured against different things — the first hint that <strong>motion depends on what you measure it against</strong>.</p>
     </aside>
   </div>
   <div class="stage">
-    <canvas id="day-canvas" class="panel-canvas square" aria-label="Earth seen from above the North Pole, orbiting the Sun"></canvas>
-    <p class="scale-note"><b>Not to scale:</b> Earth drawn thousands of times too big for its orbit, so you can see the dot. Seen from above the North Pole; the tilt is left out until the next chapter.</p>
+    <canvas id="day-canvas" class="panel-canvas square" aria-label="Earth seen from above the North Pole, orbiting the Sun — or the sky from the equator"></canvas>
     <canvas id="day-timeline" class="panel-canvas chart" aria-label="Timeline of one turn versus one solar day"></canvas>
     <div class="controls">
       <label class="ctl">
@@ -80,7 +79,6 @@
         <input type="range" id="day-year" min="0" max="1" step="0.001" value="1">
       </label>
       <div class="btn-row">
-        <button class="btn" id="day-play">Pause</button>
         <button class="btn ghost" id="day-real">Real Earth</button>
         <button class="btn ghost" id="day-retro">Spin the other way</button>
       </div>
@@ -184,22 +182,16 @@
     <p>Because the Moon's orbit is <strong>tilted by about 5°</strong> compared with Earth's orbit around the Sun. Most months, the Moon slips just above or just below the Sun, and just above or below Earth's shadow.</p>
     <p class="after">The two orbits cross at two points, the <em>nodes</em>. An eclipse needs a new or full Moon to happen <em>while the Sun lines up with the nodes</em>. That alignment comes round about every 173 days — the <strong>eclipse seasons</strong>. That's why eclipses come in pairs: a solar and a lunar eclipse often happen two weeks apart.</p>
     <p class="after">The nodes themselves slowly turn, once every 18.6 years, so eclipse seasons drift through the calendar.</p>
-    <p class="try">Let the year run and watch for the flash. Then flatten the Moon's orbit to <button class="link" data-incl="0">0°</button> — eclipses every two weeks — and back to the real <button class="link" data-incl="5.145">5.1°</button>.</p>
+    <p class="try">Watch from the Sun's direction: every two weeks the Moon slides past — usually above or below. Let the year run and watch for the flash. Then flatten the Moon's orbit to <button class="link" data-incl="0">0°</button> — eclipses every two weeks — and back to the real <button class="link" data-incl="5.145">5.1°</button>.</p>
     <aside class="aha">
       <p>Five degrees doesn't sound like much. But the Moon is 384,000 km away, so 5° moves it up to 35,000 km above or below the Sun–Earth line — while Earth's shadow there is only about 9,000 km wide. Usually it misses.</p>
       <p>There's one more lucky coincidence: the Sun is about 400 times wider than the Moon, but also about 400 times farther away. That's why the Moon can <em>just</em> cover the Sun in a total eclipse.</p>
     </aside>
   </div>
   <div class="stage">
-    <canvas id="eclipse-canvas" class="panel-canvas medium" aria-label="The Moon's tilted orbit around Earth, with the direction to the Sun"></canvas>
-    <p class="scale-note"><b>Tilt to scale; sizes and distances not.</b> Earth and Moon drawn huge; the Sun is far off to the side, in the direction of the arrow. Drag to look from another angle.</p>
+    <canvas id="eclipse-canvas" class="panel-canvas square" aria-label="The Moon's tilted orbit, and the view from the Sun's direction"></canvas>
     <canvas id="eclipse-timeline" class="panel-canvas chart" aria-label="New and full Moons over 18 months, with eclipses highlighted"></canvas>
     <div class="controls">
-      <div class="timeline">
-        <button class="btn round" id="eclipse-play" aria-label="Pause">❚❚</button>
-        <span class="ctl-label" style="flex:1">≈ 3 weeks per second · slows for eclipses</span>
-        <output id="eclipse-date">—</output>
-      </div>
       <label class="ctl">
         <span class="ctl-label">Tilt of the Moon's orbit <output id="eclipse-incl-out"></output></span>
         <input type="range" id="eclipse-incl" min="0" max="15" step="0.005" value="5.145">
@@ -208,7 +200,7 @@
     <div class="readout grid3">
       <div><span class="ro-label">Solar eclipses / year</span><span class="ro-value" id="eclipse-solar">—</span></div>
       <div><span class="ro-label">Lunar eclipses / year</span><span class="ro-value" id="eclipse-lunar">—</span></div>
-      <div><span class="ro-label">New Moons / year</span><span class="ro-value">12.4</span></div>
+      <div><span class="ro-label">Next eclipse in this model</span><span class="ro-value" id="eclipse-next">—</span></div>
     </div>
   </div>
 </section>
@@ -296,23 +288,14 @@
     <p>Night after night, Mars drifts slowly eastward against the stars. But every couple of years it stops, <strong>goes backwards</strong> for about two months, stops again, and carries on. For more than a thousand years, astronomers built ever more complicated machinery of circles-on-circles to explain these loops.</p>
     <p>The real explanation is that <strong>we're moving too</strong>. Earth is on an inside lane, going faster. Every 26 months we catch up with Mars and overtake it.</p>
     <p class="after">It's like passing a slower car on the motorway: for a moment, against the distant hills, it seems to slide backwards — even though both cars are going forward. Nothing about Mars changes. Only our point of view does.</p>
-    <p class="try">Let it run and watch the sight line sweep across the background stars. Then switch to <em>seen from the Sun</em> — and the loops vanish.</p>
+    <p class="try">Let it run from above and watch the sight line sweep. Then switch to <em>Mars in Earth's sky</em> to see the loop among the real constellations — and to <em>seen from the Sun</em>, where it vanishes.</p>
     <aside class="aha">
       <p>Mars goes backwards exactly when Earth overtakes it — which is also when it's closest and brightest in our sky (an <em>opposition</em>). The loop isn't in Mars's motion. It's in ours.</p>
       <p>This is one of the oldest lessons in astronomy, and the theme of the next chapter: <strong>what you see depends on where you're watching from</strong>.</p>
     </aside>
   </div>
   <div class="stage">
-    <canvas id="retro-canvas" class="panel-canvas square" aria-label="Earth and Mars orbiting the Sun, with the line of sight from Earth to Mars"></canvas>
-    <canvas id="retro-sky" class="panel-canvas chart" aria-label="Mars's path against the background stars"></canvas>
-    <div class="controls">
-      <div class="timeline">
-        <button class="btn round" id="retro-play" aria-label="Pause">❚❚</button>
-        <span class="ctl-label" style="flex:1">≈ 3 weeks per second</span>
-        <output id="retro-date">—</output>
-      </div>
-      <div class="seg" id="retro-view"><button class="on" data-view="earth">Seen from Earth</button><button data-view="sun">Seen from the Sun</button></div>
-    </div>
+    <canvas id="retro-canvas" class="panel-canvas square" aria-label="Earth and Mars from above, and Mars's path through Earth's sky"></canvas>
     <div class="readout grid3">
       <div><span class="ro-label">Mars appears to move</span><span class="ro-value" id="retro-dir">—</span></div>
       <div><span class="ro-label">Distance Earth–Mars</span><span class="ro-value" id="retro-dist">—</span></div>
@@ -346,12 +329,8 @@
     </div>
     <p class="scale-note">Distances: how far you've travelled since you opened this page.</p>
     <canvas id="speed-canvas" class="panel-canvas square" aria-label="Earth's path in the chosen frame of reference"></canvas>
-    <p class="scale-note" id="speed-note"></p>
     <div class="controls">
-      <div class="btn-row">
-        <button class="btn ghost" id="speed-squeeze">Squeeze the coils</button>
-        <button class="btn round" id="speed-play" aria-label="Pause">❚❚</button>
-      </div>
+      <div class="btn-row"><button class="btn ghost" id="speed-squeeze">Squeeze the coils</button></div>
       <label class="ctl" id="speed-lat-ctl">
         <span class="ctl-label">Your latitude <output id="speed-lat-out"></output></span>
         <input type="range" id="speed-lat" min="0" max="90" step="1" value="52">

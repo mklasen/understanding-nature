@@ -11,18 +11,23 @@
     },
     {
       "title": "Weather explainer",
-      "state": "todo"
+      "state": "doing"
     },
     {
       "title": "Light & colour explainer",
       "state": "todo"
     }
   ],
-  "activity": [],
+  "activity": [
+    {
+      "at": "2026-11-05T17:51:27.909Z",
+      "text": "weather: session started — building sea-breeze simulation core"
+    }
+  ],
   "status": "active",
   "headline": "Understanding Nature: a library of interactive explainers",
   "summary": "Shared kit (themes, controls, chapter loader, cross-links, catalogue), landing page with category grid; waves + orbits live; weather & light being built.",
   "next": "Publish to GitHub Pages; start weather + light sessions",
   "url": "https://understanding-nature.helios.users.ctx7.dev",
-  "updated": "2026-11-05T17:48:56.744Z"
+  "updated": "2026-11-05T17:51:27.909Z"
 }

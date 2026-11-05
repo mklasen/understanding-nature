@@ -3,7 +3,27 @@
 Sibling of understanding-waves. Guiding rule: **lead with what's true; label every exaggeration on screen.**
 Each stage has a "To scale / Not to scale" note directly under its canvas.
 
-## Architecture
+## Architecture v2 — one shared environment (5 Nov 2026)
+The user asked for more interactive views, all in "the same or a similar environment that we reuse". So:
+- `world.js` — the real world at any moment: Sun and planets (J2000 mean elements), the Moon from a lunar theory with
+  the main perturbation terms (Meeus ch. 47; ≈0.1–0.3°), Earth's orientation from GMST + obliquity (tilt is a model
+  parameter, so the seasons slider changes the actual axis), observer sites (position + East/North/Up).
+- `viewer.js` — one interactive viewer for every chapter: true perspective; cameras `orbit` (around a body or a point,
+  optionally sun-locked), `ground` (standing on Earth: sky colour from Sun altitude, horizon, compass) and `look`
+  (from a body's centre); smooth flights between view chips; drag / pinch / ctrl-wheel / +− zoom; tap a body to fly
+  to it; shared time bar; real stars + constellations (d3-celestial, BSD-3). Chapter overlays (`under/over/top`) are
+  sandboxed in try/catch so one bug can't blank a view.
+- **Scale rule:** positions are always true. Bodies are only enlarged to stay visible (floors) or by an explicit
+  per-view boost, and the viewer writes the note itself ("Enlarged to stay visible: Earth ×2500").
+- `render.js` — per-pixel lit, textured spheres (real coastlines, real lunar maria) drawn in each body's own frame,
+  so e.g. the Moon's lit side and face orientation are automatically right from any viewpoint.
+- "What if" chapters plug their own model into the same viewer (day/night: any year length, either spin direction).
+- Ported: hero, day/night, seasons, Moon, eclipses, retrograde, speed. Kepler and the cannonball remain 2D diagrams.
+- Validation after porting: eclipses 2026–27 = exactly the six real solar + partial/total lunar ones (times within
+  ~1 h); 60-year rates 2.3 solar / 1.6 lunar per year; Mars opposition 19 Feb 2027 in Leo; Amsterdam first-quarter
+  dusk Moon lit on the right, Sydney on the left, equator crescent lit at the bottom.
+
+## Architecture (v1, superseded where noted above)
 - Static site, vanilla ES modules, **Canvas2D only** (no WebGL — renders the same everywhere, incl. the GPU-less
   test browser). nginx:alpine with `./site` bind-mounted. No build step, no CDN, no dependencies.
 - One module per chapter, loaded in isolation by `main.js` (failures land in `window.__chapterErrors`).

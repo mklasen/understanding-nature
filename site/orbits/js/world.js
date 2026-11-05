@@ -9,13 +9,16 @@ export const COLOR = { sun: '#ffd27a', mercury: '#b9b2a8', venus: '#f1d9a6', ear
 export const NAME = { sun: 'Sun', mercury: 'Mercury', venus: 'Venus', earth: 'Earth', moon: 'Moon', mars: 'Mars', jupiter: 'Jupiter' };
 const PL = Object.fromEntries(PLANETS.map((p) => [p.name.toLowerCase(), p]));
 
-// Low-precision lunar theory (≈1° in position, ≈2% in distance): mean longitude L, mean anomaly M,
+// Lunar theory with the main perturbations (≈0.1–0.3° in position, ≈0.5% in distance): mean longitude L, mean anomaly M,
 // argument of latitude F (from the regressing ascending node). `incl` lets a chapter flatten/steepen the orbit.
 export function moonGeo(d, incl = MOON_INCL) {
+  // main periodic terms of the lunar theory (Meeus, Astronomical Algorithms ch. 47): ≈0.1° in position
   const L = (218.316 + 13.176396 * d) * DEG, M = (134.963 + 13.064993 * d) * DEG, F = (93.272 + 13.22935 * d) * DEG;
-  const lam = L + 6.289 * DEG * Math.sin(M);
-  const beta = (incl / 5.145) * 5.128 * DEG * Math.sin(F);
-  const r = 385001 - 20905 * Math.cos(M);
+  const D = (297.850 + 12.190749 * d) * DEG, Ms = (357.529 + 0.98560028 * d) * DEG;
+  const lam = L + DEG * (6.289 * Math.sin(M) + 1.274 * Math.sin(2 * D - M) + 0.658 * Math.sin(2 * D) + 0.214 * Math.sin(2 * M)
+    - 0.186 * Math.sin(Ms) - 0.114 * Math.sin(2 * F) + 0.059 * Math.sin(2 * D - 2 * M) + 0.057 * Math.sin(2 * D - Ms - M));
+  const beta = (incl / 5.145) * DEG * (5.128 * Math.sin(F) + 0.281 * Math.sin(M + F) + 0.278 * Math.sin(M - F) + 0.173 * Math.sin(2 * D - F));
+  const r = 385001 - 20905 * Math.cos(M) - 3699 * Math.cos(2 * D - M) - 2956 * Math.cos(2 * D) - 570 * Math.cos(2 * M);
   return { lam, beta, r, vec: [r * Math.cos(beta) * Math.cos(lam), r * Math.cos(beta) * Math.sin(lam), r * Math.sin(beta)] };
 }
 // Greenwich mean sidereal time (rad): Earth's rotation angle relative to the March equinox
