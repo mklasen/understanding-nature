@@ -110,6 +110,46 @@ breeze sets in a little late; the sea-side air slowly warms ~1.5 °C over the da
 - Drawing: heights on a square-root scale (labelled "heights stretched near the ground") so the
   bottom 100 m is visible; the streaks' speeds are a time-lapse.
 
+## Chapter 5 — how clouds form (`parcel.js`, `clouds.js`)
+Classic parcel theory, computed rather than drawn.
+- **Environment:** `T_env(z) = T0 − Γ·z`, Γ = 4–9.5 K/km (slider), isothermal above an 11 km
+  tropopause. "Sunny afternoon" (default on) makes the lowest **1.2 km well mixed** (cools at the
+  dry rate, as the Sun-stirred boundary layer really does) and starts the parcel as a **thermal
+  0.5 K warmer** than its surroundings. Without it, fair-weather cumulus can't form in a parcel
+  model — that's the honest reason it's there. Optional **warm lid**: +5 K over 1.8–2.2 km (an
+  inversion, the usual cap on fair-weather cumulus).
+- **Pressure** by integrating the hydrostatic equation on the environment (10 m steps).
+- **Parcel:** keeps its water-vapour mixing ratio while dry and cools at `g/cp = 9.76 K/km`.
+  Saturation via Bolton (1980) `es = 6.112·exp(17.67T/(T+243.5))`. Cloud base (LCL) is found where
+  its dew point meets its temperature (interpolated). Above it, the **pseudo-adiabatic lapse rate**
+  `Γs = g(1 + L·rs/(Rd·T)) / (cp + L²·rs·ε/(Rd·T²))`, integrated with RK2.
+- **LFC / EL / CAPE** from the buoyancy `Tp − Te`. Verdict: LCL > 6 km → too dry; no LFC → fog
+  (LCL < 300 m) or "only where forced up"; positive area ends below cloud base → dry thermals;
+  LFC above max(3 km, LCL + 1.5 km) → "only if pushed up hard"; cloud depth < 1.8 km → fair-weather
+  cumulus; EL < 7 km or CAPE < 400 J/kg → shower cloud; else thunderstorm.
+- **Free rise** ("Let it go"): `dw/dt = g·(Tp − Te)/Te − |w|w/400 − w/200` (crude drag + mixing,
+  so updrafts are realistic, not the frictionless √(2·CAPE)). Animated as a **×60 time-lapse**,
+  labelled on the canvas. Descent reuses the ascent path (reversible approximation).
+- Ignored, and said so here: virtual temperature (moisture makes air lighter), entrainment,
+  ice/freezing latent heat, rain-out. Canvas: heights to scale; cloud widths not.
+
+### Sanity checks (headless, node)
+| | model | textbook / real |
+|---|---|---|
+| dry adiabatic lapse | 9.76 K/km | 9.8 K/km |
+| parcel dew-point fall | 1.74 K/km | ~1.8 K/km |
+| saturated lapse at 30 / 20 / 15 / 0 °C, 1000 hPa | 3.5 / 4.2 / 4.7 / 6.5 K/km | 3.5 / 4.3 / 4.7 / 6.5 K/km |
+| saturated lapse at −20 °C 700 hPa / −40 °C 300 hPa | 8.2 / 9.0 K/km | ~8 / ~9 K/km (→ dry rate aloft) |
+| LCL vs 125 m × (T − Td) | 2743 vs 2769 m; 624 vs 614 m; 1183 vs 1181 m | rule of thumb |
+| pressure at 10 km | 258–281 hPa | ~265 hPa (standard atmosphere) |
+| "fair weather" (22 °C, 55 %, 6.5 K/km, lid) | base 1.25 km, top 1.9 km, CAPE 38 J/kg | cumulus humilis, 1–2 km |
+| same without the lid | top 7.7 km, CAPE 550 J/kg → thunderstorm (borderline) | weak storms ~500–1000 J/kg |
+| "tropics" (30 °C, 75 %, 5.5 K/km) | base 690 m, top 11.7 km, CAPE ~3000 J/kg, updraft ~11 m/s | tropical Cb: base ~0.5–1 km, tops 12–16 km, CAPE 2000–5000+, updrafts 10–30 m/s |
+| "dry afternoon" (30 °C, 25 %) | base would be 2.8 km; thermals stop at 1.5 km → no cloud | blue-sky thermals |
+| "cold damp morning" (3 °C, 97 %, stable) | base 54 m → fog | fog |
+Known weakness: no entrainment, so steep environments (≥ 6.5 K/km) with very humid air give
+buoyancies of 15+ °C aloft — more than real storms manage. The tropical preset uses 5.5 K/km.
+
 ## Chapter 6 — fronts and rain (`fronts.js`)
 **Schematic, not simulated.** A kinematic cross-section: the frontal surface, clouds and rain are
 fixed shapes in the front's frame of reference, and the front slides past a town at a constant

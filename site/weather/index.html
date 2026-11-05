@@ -38,8 +38,10 @@
   <a href="#pressure"><i>2</i>Highs and lows</a>
   <a href="#spin"><i>3</i>Why storms spin</a>
   <a href="#friction"><i>4</i>Friction and gusts</a>
+  <a href="#clouds"><i>5</i>How clouds form</a>
   <a href="#fronts"><i>6</i>Fronts and rain</a>
   <a href="#global"><i>7</i>The global engine</a>
+  <a href="#summary"><i>8</i>Weather vs climate</a>
 </nav>
 
 <main>
@@ -202,6 +204,63 @@
 </section>
 
 
+<!-- ============ 5. CLOUDS ============ -->
+<!-- ============ 5. CLOUDS ============ -->
+<section class="chapter" id="clouds">
+  <div class="text">
+    <p class="num">5</p>
+    <h2>How clouds form: lift air until it can't hold its water</h2>
+    <p>All air carries water as invisible vapour. How much it <em>can</em> hold depends on temperature: warm air can hold a lot, cold air very little. Cool air enough and the vapour has to come out as tiny droplets. The temperature where that happens is the <strong>dew point</strong>.</p>
+    <p>And the surest way to cool air is to <strong>lift it</strong>. Pressure falls with height, so rising air expands — and expanding air cools: <strong>9.8 °C for every kilometre</strong>, like clockwork. Its dew point falls only about 1.8 °C per km. So the two close in, and where they meet the vapour condenses. That height is the flat bottom you see on a summer cumulus: the <strong>cloud base</strong>.</p>
+    <p>Then something remarkable happens. Condensing water gives back the heat it took to evaporate it. Inside the cloud, the rising air cools only about <strong>4–7 °C per km</strong>. If that keeps it warmer than the air around it, it rises on its own — sometimes all the way to the top of the weather, 10 km up. That's a thunderstorm.</p>
+    <p>You can see your breath on a cold morning for the same reason: your warm, damp breath is cooled by the cold air around it below its dew point, and the vapour turns to a little cloud. Same physics, no lifting required.</p>
+    <p class="try">Lift the air with the height slider and watch it reach cloud base, then press <b>Let it go</b>. Compare a <button class="link" data-cpreset="fair">fair-weather day</button>, a <button class="link" data-cpreset="summer">dry, hot afternoon</button>, a <button class="link" data-cpreset="tropics">humid tropical afternoon</button> and a <button class="link" data-cpreset="morning">cold, damp morning</button>. Then switch off the warm lid.</p>
+    <aside class="aha" id="clouds-aha">
+      <p>A cloud is just air that has been lifted past its dew point. Its flat base is where that happens; its height tells you how humid the air is — about 125 m for every degree between the temperature and the dew point.</p>
+      <p>How <em>tall</em> the cloud grows depends on the air around it. If the surroundings get cold fast enough with height, the cloudy air stays warmer, and keeps rising on the heat its own water vapour released. Moist air is fuel; thunderstorms are what happens when it burns.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="clouds-canvas" class="panel-canvas tall" aria-label="Left: temperature against height for the rising air and its surroundings. Right: the rising bubble of air and the cloud it makes."></canvas>
+    <p class="legend"><span><i style="background:#fff"></i>surroundings</span><span><i style="background:#ff9a5a"></i>rising air, dry</span><span><i style="background:#8ec5ff"></i>rising air, in cloud</span><span><i style="background:#9fd8a5"></i>dew point</span><span><i style="background:rgba(255,154,90,0.45)"></i>warmer than around it: rises on its own</span></p>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Lift the air to <output id="clouds-z-out"></output></span>
+        <input type="range" id="clouds-z" min="0" max="12000" step="50" value="0">
+      </label>
+    </div>
+    <div class="btn-row">
+      <button class="btn" id="clouds-go">Let it go</button>
+      <button class="btn ghost" id="clouds-ground">Back to the ground</button>
+    </div>
+    <div class="controls three">
+      <label class="ctl">
+        <span class="ctl-label">Ground temperature <output id="clouds-t-out"></output></span>
+        <input type="range" id="clouds-t" min="-5" max="35" step="1" value="22">
+      </label>
+      <label class="ctl">
+        <span class="ctl-label">Humidity <output id="clouds-rh-out"></output></span>
+        <input type="range" id="clouds-rh" min="10" max="100" step="1" value="55">
+      </label>
+      <label class="ctl">
+        <span class="ctl-label">Surroundings cool by <output id="clouds-lapse-out"></output></span>
+        <input type="range" id="clouds-lapse" min="4" max="9.5" step="0.1" value="6.5">
+      </label>
+    </div>
+    <div class="btn-row toggles">
+      <label class="toggle"><input type="checkbox" id="clouds-sun" checked><span>Sunny afternoon (lowest 1.2 km stirred)</span></label>
+      <label class="toggle"><input type="checkbox" id="clouds-lid" checked><span>Warm lid at 2 km</span></label>
+    </div>
+    <div class="readout grid4">
+      <div><span class="ro-label">Cloud base</span><span class="ro-value" id="clouds-base">–</span></div>
+      <div><span class="ro-label" id="clouds-here-label">Bubble</span><span class="ro-value small" id="clouds-here">–</span></div>
+      <div><span class="ro-label">Cloud top, if it rises freely</span><span class="ro-value" id="clouds-top">–</span></div>
+      <div><span class="ro-label">The sky today</span><span class="ro-value small" id="clouds-verdict">–</span></div>
+    </div>
+    <p class="why" id="clouds-why"></p>
+  </div>
+</section>
+
 <!-- ============ 6. FRONTS ============ -->
 <!-- ============ 6. FRONTS ============ -->
 <section class="chapter" id="fronts">
@@ -287,6 +346,36 @@
     </div>
     <p class="why" id="global-why"></p>
   </div>
+</section>
+
+<!-- ============ 8. SUMMARY ============ -->
+<section class="summary" id="summary">
+  <p class="num">8</p>
+  <h2>Weather and climate, in one breath</h2>
+  <div class="cards">
+    <article class="card a">
+      <h3>Weather</h3>
+      <dl>
+        <dt>Is</dt><dd>What the air is doing now: this sea breeze, this low, this shower</dd>
+        <dt>Timescale</dt><dd>Minutes to about two weeks</dd>
+        <dt>Driven by</dt><dd>Uneven heating → pressure differences → wind, twisted by Earth's spin and slowed by friction</dd>
+        <dt>Rain from</dt><dd>Air forced upward — by heating, fronts, mountains or a low — cooling until its water condenses</dd>
+        <dt>Predictable</dt><dd>A few days ahead in detail, about 10 days in outline. Small errors grow: the air is chaotic</dd>
+      </dl>
+    </article>
+    <article class="card b">
+      <h3>Climate</h3>
+      <dl>
+        <dt>Is</dt><dd>The statistics of the weather: what's normal, and how often the extremes come</dd>
+        <dt>Timescale</dt><dd>Decades (usually 30-year averages)</dd>
+        <dt>Driven by</dt><dd>Where you sit in the global engine — rainy belts, desert belts, storm tracks — plus oceans, mountains and the air's greenhouse gases</dd>
+        <dt>Changes when</dt><dd>The energy going in or out changes: the Sun, the seasons, the atmosphere's makeup</dd>
+        <dt>Predictable</dt><dd>Yes, on average — the way you can't call one dice roll, but can say how a thousand will come out</dd>
+      </dl>
+    </article>
+  </div>
+  <p class="closing">The Sun heats the Earth unevenly. Air tries to even it out, the spinning planet turns it aside, the ground drags on it, and every time it rises it leaves a cloud behind. Climate is what you expect; weather is what you get.</p>
+  <p class="foot">A real (small) fluid model for the sea breeze, Coriolis and friction from the textbook equations, parcel theory for clouds — simplified to be felt, accurate enough to teach. <a href="DECISIONS.md">How it's modelled</a>.</p>
 </section>
 
 </main>
