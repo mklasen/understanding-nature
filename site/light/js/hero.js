@@ -52,6 +52,8 @@ export function initHero() {
   canvas.addEventListener('pointermove', (ev) => { if (drag) setRange(input, Math.max(-8, Math.min(55, toEl(ev)))); });
   canvas.addEventListener('pointerup', () => { drag = false; });
 
+  // on phones the headline covers the upper sky: start with a lower Sun so it's visible
+  if (mobile()) setRange(input, 14);
   let lastW = 0;
   const frame = (dt) => {
     if (playing) {
