@@ -38,6 +38,7 @@
   <a href="#pressure"><i>2</i>Highs and lows</a>
   <a href="#spin"><i>3</i>Why storms spin</a>
   <a href="#friction"><i>4</i>Friction and gusts</a>
+  <a href="#global"><i>7</i>The global engine</a>
 </nav>
 
 <main>
@@ -196,6 +197,50 @@
       <div><span class="ro-label">Turned toward low</span><span class="ro-value" id="friction-angle">–</span></div>
     </div>
     <p class="why" id="friction-why"></p>
+  </div>
+</section>
+
+
+<!-- ============ 7. GLOBAL ============ -->
+<!-- ============ 7. GLOBAL CIRCULATION ============ -->
+<section class="chapter" id="global">
+  <div class="text">
+    <p class="num">7</p>
+    <h2>The global engine</h2>
+    <p>Zoom out from the beach and the planet runs the same trick on a giant scale. The tropics get far more sunshine than the poles, so the air is always trying to carry heat poleward. If Earth didn't spin, it would do it in one loop: rise at the equator, flow to the pole up high, sink, and creep back along the ground.</p>
+    <p>But Earth <em>does</em> spin, and the Coriolis effect from chapter 3 breaks that loop into <strong>three cells in each hemisphere</strong>. Air rising in the tropics sinks again around 30°. As it flows back toward the equator it is deflected west — the steady <strong>trade winds</strong>. Air heading poleward from 30° is deflected east — the <strong>westerlies</strong>. Near 60° it meets cold polar air, and that clash is where most of our storms are born.</p>
+    <ul class="ingredients">
+      <li><b>Rising air</b> (the equator, ~60°): cloud and rain.</li>
+      <li><b>Sinking air</b> (~30°, the poles): clear, dry skies.</li>
+      <li><b>Surface winds</b>: the return flow, bent by Earth's spin.</li>
+    </ul>
+    <p>High up, where the cells meet, the air races east in narrow rivers: the <strong>jet streams</strong>. They steer the lows and fronts of chapters 3 and 6 — which is why weather in Europe and North America mostly arrives from the west.</p>
+    <p class="try">Find your own latitude and read off your prevailing wind. Run the months and watch the rain belt follow the Sun north and south. Then switch off Earth's spin.</p>
+    <aside class="aha" id="global-aha">
+      <p>Look at a map of the world's great deserts — the Sahara, Arabia, the Kalahari, the Australian outback, the Atacama, the Sonoran. They line up near <strong>30° north and south</strong>, right where the Hadley cells' air comes back down, warmed and dried.</p>
+      <p>Sailors knew the pattern long before anyone explained it: ride the trade winds west across the Atlantic, come home on the westerlies further north, and dread the windless doldrums and "horse latitudes" in between.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="global-globe" class="panel-canvas square" aria-label="A globe showing the average surface winds and the wet and dry belts"></canvas>
+    <canvas id="global-section" class="panel-canvas" aria-label="Cross-section from pole to pole showing the Hadley, Ferrel and polar cells"></canvas>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Month <output id="global-month-out"></output></span>
+        <input type="range" id="global-month" min="0" max="11.99" step="0.05" value="6.5">
+      </label>
+      <label class="ctl">
+        <span class="ctl-label">Your latitude <output id="global-lat-out"></output></span>
+        <input type="range" id="global-lat" min="-80" max="80" step="1" value="52">
+      </label>
+      <label class="toggle"><input type="checkbox" id="global-nospin"><span>If Earth didn't spin</span></label>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">You're under the</span><span class="ro-value small" id="global-cell">–</span></div>
+      <div><span class="ro-label">Prevailing wind</span><span class="ro-value small" id="global-wind">–</span></div>
+      <div><span class="ro-label">Typical weather</span><span class="ro-value small" id="global-weather">–</span></div>
+    </div>
+    <p class="why" id="global-why"></p>
   </div>
 </section>
 

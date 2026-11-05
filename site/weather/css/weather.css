@@ -13,3 +13,16 @@
 .card.a { background: linear-gradient(160deg, rgba(142, 197, 255, 0.18), rgba(18, 35, 59, 0.92) 60%); }
 .card.b { background: linear-gradient(160deg, rgba(255, 154, 90, 0.16), rgba(18, 35, 59, 0.92) 60%); }
 .card.a h3 { color: var(--accent); } .card.b h3 { color: var(--warmair); }
+
+/* ---------- chapter 7: global ---------- */
+/* chapter 7 — global circulation */
+#global-section { height: 210px; }
+#global-globe { cursor: pointer; }
+#global .readout.grid3 > div { min-width: 0; }
+@media (max-width: 960px) { #global-section { height: 190px; } }
+@media (max-width: 620px) {
+  #global-section { height: 170px; }
+  /* long sentences: stack label over value instead of side by side */
+  #global .readout.grid3 > div { flex-direction: column; align-items: flex-start; gap: 2px; }
+  #global .readout.grid3 .ro-value { text-align: left; font-size: 15px; }
+}

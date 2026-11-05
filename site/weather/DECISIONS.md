@@ -109,3 +109,41 @@ breeze sets in a little late; the sea-side air slowly warms ~1.5 °C over the da
 
 - Drawing: heights on a square-root scale (labelled "heights stretched near the ground") so the
   bottom 100 m is visible; the streaks' speeds are a time-lapse.
+
+## Chapter 7 — the global engine (`global.js`)
+A **schematic, zonally averaged** three-cell model, not a simulation: belts and winds are written
+down analytically from climatology. No continents (we show no coastlines, and say so on the canvas:
+"no continents"), so monsoons and the big land/sea contrasts are described in text, not drawn.
+
+- **Belts** (latitude of each boundary), driven by the month `m` (0 = 1 Jan):
+  `ITCZ = 5 + 6.5·cos(2π(m − 7.5)/12)` → 5°N mean, −1.5° in mid-Feb, 11.5°N in mid-Aug (lags the Sun
+  by ~2 months). Other boundaries follow with smaller swings, `d = ITCZ − 5`:
+  subtropical highs `±30 + 0.6d` (≈ 26–34°), polar front `±60 + 0.5d` (≈ 57–63°).
+  Reality: zonal-mean ITCZ ≈ 5–6°N annual mean, migrating roughly 0–2°S (Jan–Feb) to 10–12°N
+  (Aug) over the oceans (e.g. Schneider, Bischoff & Haug 2014); over land far more (≈15°S over southern
+  Africa/Amazonia in January, 20–25°N with the Asian monsoon) — mentioned in the readout text.
+  Hadley-cell edge 25–35° with season; storm track ~45–60°.
+- **Surface wind** per belt, `sin(π·t)` across each belt (so it dies away at the boundaries — the
+  doldrums and horse latitudes fall out naturally), peak values:
+  trades u = −6.5, v = ±2.8 m/s toward the ITCZ (≈ from ENE / ESE, ~23° off east; observed trades
+  5–8 m/s, ENE/ESE); NH westerlies u = 7, v = 2.2 (from WSW); SH westerlies u = 8.5, v = −2.4
+  ("roaring forties", observed 8–12 m/s over the Southern Ocean); polar easterlies u = −3.5,
+  v = 1.2 toward the equator. Zonal means hide the day-to-day storms, which is the point.
+- Readouts use a 16-point compass on the direction the wind comes **from**; "doldrums" / "horse
+  latitudes" (within 5° of the ITCZ / subtropical highs) read "light and variable".
+- **No-spin toggle**: Hadley's (1735) single cell per hemisphere — surface air flows straight toward
+  the thermal equator (v up to 5 m/s, u = 0), rising at the ITCZ, sinking at the poles. Fields blend
+  smoothly (e-folding ~0.3 s) so you can watch the trades straighten out.
+- **Globe**: orthographic, viewed from 10°N, fixed (it does *not* spin on screen, to keep the wind
+  direction readable). Texture rendered per pixel (180–240 px, cached until month/spin changes):
+  ocean, ITCZ thunderstorm clusters (value noise), sandy tint for the dry subtropical belts, grey
+  swirls on the storm tracks, trade cumulus, ice caps >72°, soft sunlight from the solar declination
+  (summer hemisphere brighter). The colour bands mean "typically wet/dry", **not** land.
+  Particles drift with the surface wind, time-lapse **1 s ≈ 3 days** (on canvas).
+- **Cross-section**: pole to pole, 0–18 km, tropopause `8.5 + 8/(1+e^((|φ|−35)/6))` km (≈16.5 km at
+  the equator, ≈9 km at 60°). Cells are ellipses with dots circulating in the right sense (rising at
+  the ITCZ and the polar front, sinking at the subtropical highs and the poles). Viewed facing west,
+  so the eastward jet streams point at you (⊙): subtropical jet at the Hadley edge ~12 km, polar jet
+  at the polar front ~9.5 km; symbol size grows in each hemisphere's winter (jets are stronger then).
+  Canvas says "schematic · heights ×N" (computed live: ≈ ×240 on a desktop, ×390 on a phone).
+- Tap the globe to set "your latitude" (inverse orthographic projection).
