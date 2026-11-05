@@ -9,5 +9,6 @@ bootChapters((f) => import(`./${f}`), [
   ['pressure.js', 'initPressure'],
   ['spin.js', 'initSpin'],
   ['friction.js', 'initFriction'],
+  ['fronts.js', 'initFronts'],
   ['global.js', 'initGlobal'],
 ]);

@@ -26,3 +26,8 @@
   #global .readout.grid3 > div { flex-direction: column; align-items: flex-start; gap: 2px; }
   #global .readout.grid3 .ro-value { text-align: left; font-size: 15px; }
 }
+
+/* ---------- chapter 6: fronts ---------- */
+/* fronts (chapter 6) */
+#fronts .ro-value small { font-size: 12.5px; color: var(--ink-soft); margin-left: 4px; white-space: nowrap; }
+#fronts .ingredients li { padding-left: 22px; }

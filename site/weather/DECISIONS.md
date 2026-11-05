@@ -110,6 +110,38 @@ breeze sets in a little late; the sea-side air slowly warms ~1.5 °C over the da
 - Drawing: heights on a square-root scale (labelled "heights stretched near the ground") so the
   bottom 100 m is visible; the streaks' speeds are a time-lapse.
 
+## Chapter 6 — fronts and rain (`fronts.js`)
+**Schematic, not simulated.** A kinematic cross-section: the frontal surface, clouds and rain are
+fixed shapes in the front's frame of reference, and the front slides past a town at a constant
+speed. Everything you read at the town comes from where the town sits relative to the front.
+The canvas says "schematic · N km across · 11 km high · heights ×N" (×≈100 on desktop, ×≈110 on phones).
+Winds are northern-hemisphere (SE → SW at a warm front, SW → NW at a cold front).
+
+| | used | real-world range |
+|---|---|---|
+| warm-front speed | 20 km/h | 15–25 km/h (about half to two-thirds of a cold front's speed) |
+| warm-front slope | 1:150 | 1:100 – 1:300 |
+| cirrus ahead of a warm front | 800–1,090 km, 8.4–10 km up | first cirrus ~1,000 km / 24–36 h ahead, 8–12 km |
+| cirrostratus / altostratus | 560–860 / 260–660 km ahead | thickening, lowering sheet in the last ~600 km |
+| nimbostratus + steady rain | last ~300 km (≈ 15 h at 20 km/h) | rain belt ~200–400 km wide ahead of the surface front |
+| cold-front speed | 30 km/h | 25–40 km/h |
+| cold-front slope | ~1:70 overall, steep "nose" (1.5 km within ~40 km) | 1:50 – 1:100; the nose is blunter from surface friction |
+| cumulonimbus | base 0.8 km, top ~10 km, anvil streaming ~170 km ahead | tops 8–15 km (tropopause); anvils 100+ km |
+| heavy rain band | ~55 km wide (≈ 2 h) + patchy showers behind | typically 1–3 h of heavy rain, then showers |
+| town temperatures | warm front 7 → 15 °C; cold front 16 → 9 °C | 3–10 °C jumps are typical |
+| pressure | falls ~13 hPa over ~50 h ahead of the warm front (0.2–0.5 hPa/h); minimum at the cold front, then rises 0.7–1 hPa/h | falling 1–3 hPa per 3 h ahead of a warm front; sharp rise after a cold front |
+
+- **Air motes** move in the front's frame: warm air overtakes a warm front at +14 km/h and glides up
+  parallel to the frontal surface; it turns white ("cloudy") once lifted ≥ 0.9 km — the lift needed
+  to cool moist air (dew-point depression ~7 °C) to saturation at ~9.8 °C/km (chapter 5). At a
+  cold front, warm air is run into at 20 km/h, rises at ~10 m/s in the storm (strong but real
+  thunderstorm updrafts are 10–30 m/s), then streams ahead in the anvil.
+- Cloud placement, rain intensity and the town's weather are hand-shaped from the classic
+  Norwegian cyclone model (Bjerknes) and standard textbook cross-sections, not computed.
+  Real fronts vary hugely (split fronts, ana/kata fronts, occlusions): **not modelled**.
+- Time-lapse: warm front 6 model-hours per second, cold front 3. When paused, the air keeps
+  drifting gently so the lifting stays visible.
+
 ## Chapter 7 — the global engine (`global.js`)
 A **schematic, zonally averaged** three-cell model, not a simulation: belts and winds are written
 down analytically from climatology. No continents (we show no coastlines, and say so on the canvas:

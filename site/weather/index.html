@@ -38,6 +38,7 @@
   <a href="#pressure"><i>2</i>Highs and lows</a>
   <a href="#spin"><i>3</i>Why storms spin</a>
   <a href="#friction"><i>4</i>Friction and gusts</a>
+  <a href="#fronts"><i>6</i>Fronts and rain</a>
   <a href="#global"><i>7</i>The global engine</a>
 </nav>
 
@@ -200,6 +201,50 @@
   </div>
 </section>
 
+
+<!-- ============ 6. FRONTS ============ -->
+<!-- ============ 6. FRONTS ============ -->
+<section class="chapter" id="fronts">
+  <div class="text">
+    <p class="num">6</p>
+    <h2>Fronts, and why a low brings rain</h2>
+    <p>Air doesn't mix as easily as you'd think. A mass of cold air from the north and a mass of warm, moist air from the south can sit side by side for days, like oil and vinegar. The boundary between them is a <strong>front</strong>, and most of the rain in places like Europe falls along one.</p>
+    <p>Fronts gather around low-pressure systems. Air spirals <em>into</em> a low (chapter 3 showed why it spirals), and it can't pile up at the centre. It has only one way to go: <strong>up</strong>. Rising air cools, and cooled air turns its moisture into cloud (chapter 5 showed how). So a low brings rain, and the fronts are where the lifting is strongest.</p>
+    <p>There are two kinds, and you can tell them apart by how they arrive:</p>
+    <ul class="ingredients">
+      <li><b>Warm front</b>: warm air catches up with cold air and glides <em>up over</em> it, along a slope so gentle that its clouds reach 1,000 km ahead. Slow, wide and grey, with hours of steady rain.</li>
+      <li><b>Cold front</b>: cold, dense air bulldozes <em>under</em> warm air and throws it steeply upward. Fast, narrow and violent: a squall line, a downpour, then a sudden clear-out.</li>
+    </ul>
+    <p class="try">Press play and watch a warm front reach the town: the high wisps come first, then the sky lowers, then the rain. Then switch to a cold front and compare. Drag the time slider to stand still at any moment.</p>
+    <aside class="aha" id="fronts-aha">
+      <p>You can read a warm front coming a day ahead. When thin cirrus thickens into a milky veil (often with a halo round the Sun or Moon) and the barometer starts to fall, <strong>rain is usually 12–24 hours away</strong>.</p>
+      <p>A cold front gives you minutes, not hours: a dark wall of cloud, a gust of cold wind, a downpour. Then the pressure jumps, the wind swings round to the north-west, and the air turns crisp and clear.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="fronts-canvas" class="panel-canvas tall" aria-label="Cross-section of a weather front passing over a town"></canvas>
+    <p class="legend"><span><i style="background:#ffb98a"></i>warm, moist air</span><span><i style="background:#5f9bff"></i>cold air</span><span>white streaks: air lifted until it makes cloud</span></p>
+    <div class="stage-bar">
+      <div class="seg small" id="fronts-type" role="group" aria-label="Kind of front">
+        <button data-type="warm" class="on">Warm front</button><button data-type="cold">Cold front</button>
+      </div>
+      <button class="btn round" id="fronts-play" aria-label="Pause">❚❚</button>
+    </div>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Time <output id="fronts-t-out"></output></span>
+        <input type="range" id="fronts-t" min="-48" max="12" step="0.25" value="-40">
+      </label>
+    </div>
+    <div class="readout grid4">
+      <div><span class="ro-label">In the town</span><span class="ro-value" id="fronts-temp">–</span></div>
+      <div><span class="ro-label">Pressure</span><span class="ro-value small" id="fronts-p">–</span></div>
+      <div><span class="ro-label">Wind</span><span class="ro-value small" id="fronts-wind">–</span></div>
+      <div><span class="ro-label">Sky</span><span class="ro-value small" id="fronts-sky">–</span></div>
+    </div>
+    <p class="why" id="fronts-why"></p>
+  </div>
+</section>
 
 <!-- ============ 7. GLOBAL ============ -->
 <!-- ============ 7. GLOBAL CIRCULATION ============ -->
