@@ -21,7 +21,8 @@ const WL = solve3([[M[0][0], M[1][0], M[2][0]], [M[0][1], M[1][1], M[2][1]], [M[
 const chrom = (c) => { const s = c[0] + c[1] + c[2] || 1; return [c[0] / s, c[2] / s]; };
 // cone responses to the three lamps at full power (white), for scaling the bars
 const LMSW = (() => { const t = [0, 0, 0]; LAMPS.forEach((l, i) => cone(l).forEach((v, k) => (t[k] += WL[i] * v))); return Math.max(...t); })();
-const LOCUS = []; for (let l = 400; l <= 700; l += 1) LOCUS.push([l, chrom(cone(l))]);
+// (400–650 nm: beyond that the CMF fit's tails make L/(L+M) turn back down, which real cones don't)
+const LOCUS = []; for (let l = 400; l <= 650; l += 1) LOCUS.push([l, chrom(cone(l))]);
 
 export function initCones() {
   const canvas = $('cones-canvas');
@@ -81,7 +82,7 @@ export function initCones() {
     const { ctx, w, h } = fitCanvas(canvas);
     ctx.clearRect(0, 0, w, h);
     const m = w < 560;
-    const gx0 = 34, gx1 = m ? w - 12 : w * 0.68, gy0 = 36, gy1 = h - (m ? 110 : 44);
+    const gx0 = 34, gx1 = m ? w - 12 : w * 0.68, gy0 = 36, gy1 = h - (m ? 128 : 44);
     const X = (l) => gx0 + ((l - 400) / 300) * (gx1 - gx0), Y = (v) => gy1 - v * (gy1 - gy0);
     // spectrum strip
     for (let l = 400; l < 700; l += 2) { ctx.fillStyle = css(wavelengthRGB(l)); ctx.fillRect(X(l), gy1 + 4, X(l + 2) - X(l) + 0.5, 10); }
@@ -108,7 +109,7 @@ export function initCones() {
       });
     }
     // bars: the three numbers your brain receives
-    const bx = m ? 40 : w * 0.74, bw = m ? (w - 80) / 3 : (w * 0.24) / 3, by1 = h - 30, bh = m ? 54 : h - 110;
+    const bx = m ? 40 : w * 0.74, bw = m ? (w - 80) / 3 : (w * 0.24) / 3, by1 = h - 30, bh = m ? 64 : h - 110;
     const mx = Math.max(1, ...s.lms);
     ['L', 'M', 'S'].forEach((nm, k) => {
       const v = s.lms[k] / mx;

@@ -156,6 +156,9 @@ library: **accurate enough to teach, simple enough to feel**. Where we exaggerat
   hidden behind the headline. Mouse users can drag the Sun on the hero; touch keeps scrolling
   (the slider moves it).
 
+## Images
+- `card.jpg` / `og.jpg` are frames of the live hero (Sun at 2.2°), not paintings.
+
 ## QA notes
 - The shared test browser (~1.5 fps, no GPU) often can't take full-page screenshots of the
   pages with animated canvases. QA was done by grabbing canvases with `toDataURL`, plus
@@ -165,4 +168,3 @@ library: **accurate enough to teach, simple enough to feel**. Where we exaggerat
 - Polarisation chapter (sunglasses, the polarised sky at 90° from the Sun, Brewster angle).
 - Green flash; why the Moon's sky is black (partly covered by the "No air" button).
 - Multiple-scattering approximation for a brighter horizon and twilight.
-- Card / OG images (`card.jpg`, `og.jpg`) rendered from the hero at sunset.

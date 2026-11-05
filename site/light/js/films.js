@@ -96,8 +96,9 @@ export function initFilms() {
     ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(px, py, 7, 0, 7); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(px - 11, py); ctx.lineTo(px - 4, py); ctx.moveTo(px + 4, py); ctx.lineTo(px + 11, py); ctx.stroke();
     ctx.font = '11.5px ui-sans-serif, system-ui, sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.textAlign = 'left';
-    ctx.fillText(kind === 'soap' ? 'A soap film draining (computed colours) · tap to measure' : 'Oil on a wet road (computed colours) · tap to measure', 10, 18);
-    if (kind === 'soap') { ctx.fillStyle = 'rgba(174,182,204,0.75)'; ctx.fillText('thinnest at the top', 10, 34); }
+    const mob = w < 560;
+    ctx.fillText(kind === 'soap' ? (mob ? 'Soap film · tap it' : 'A soap film draining (computed colours) · tap to measure') : (mob ? 'Oil on a wet road · tap it' : 'Oil on a wet road (computed colours) · tap to measure'), 10, 18);
+    if (kind === 'soap' && !mob) { ctx.fillStyle = 'rgba(174,182,204,0.75)'; ctx.fillText('thinnest at the top', 10, 34); }
     const [plus, minus] = describe(dnm);
     $('films-d').textContent = `${Math.round(dnm)} nm`;
     $('films-plus').textContent = plus; $('films-minus').textContent = minus;
@@ -132,6 +133,6 @@ export function initFilms() {
       ctx.fillText(frac > 0.75 ? 'adds up ↑' : frac < 0.3 ? 'cancels ✕' : 'partly', 10, yc + 13);
     });
     ctx.fillStyle = 'rgba(174,182,204,0.7)'; ctx.font = '10.5px ui-sans-serif, system-ui, sans-serif'; ctx.textAlign = 'right';
-    ctx.fillText('faint: reflections off front and back · bold: what you see', w - 10, fh + 12);
+    ctx.fillText(w < 560 ? 'faint: the two reflections · bold: their sum' : 'faint: reflections off front and back · bold: what you see', w - 10, fh + 12);
   });
 }

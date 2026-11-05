@@ -49,6 +49,7 @@ export const EXPLAINERS = [
     title: 'Understanding Light & Colour', short: 'Why the sky is blue',
     hook: 'Why is the sky blue — and sunsets red?',
     blurb: 'Scattering, rainbows at 42°, the colour of the sea, and light as a wave.',
+    image: 'light/card.jpg',
     chapters: {
       spectrum: 'White is every colour', sky: 'Why the sky is blue', sunset: 'Red sunsets', clouds: 'White clouds',
       rainbow: 'Rainbows', sea: 'The blue sea', films: 'Light is a wave', cones: 'Colour is in your head', summary: 'Five tricks of light',

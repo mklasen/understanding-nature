@@ -53,3 +53,7 @@ h1 { text-shadow: 0 2px 30px rgba(10, 10, 30, 0.45); }
   #clouds-canvas { height: min(118vw, 64vh); }
   .text > .after { margin-top: 0; }
 }
+@media (max-width: 960px) {
+  #cones-canvas { height: min(112vw, 64vh); }
+  #rain-canvas { height: min(118vw, 66vh); }
+}

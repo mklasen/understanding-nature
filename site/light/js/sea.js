@@ -129,9 +129,10 @@ export function initSea() {
     ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.font = '10.5px ui-sans-serif, system-ui, sans-serif'; ctx.textAlign = 'right';
     for (const z of [1, 5, 10, 20, 40, 60]) { const y = yOf(z); ctx.fillRect(w - 6, y, 6, 1); ctx.fillText(`${z} m`, w - 9, y + 4); }
     ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(255,255,255,0.75)';
-    ctx.fillText('Cross-section · depth not to scale (squeezed) · water coloured by the light left at each depth', 8, h - 7);
+    ctx.fillText(w < 560 ? 'Cross-section · depth squeezed · colour = light left' : 'Cross-section · depth not to scale (squeezed) · water coloured by the light left at each depth', 8, h - 7);
     ctx.textAlign = 'center';
-    ctx.fillText('deep water:', w * 0.89, y0 + H * 0.45); ctx.fillText('no light comes', w * 0.89, y0 + H * 0.45 + 14); ctx.fillText('back from the bottom', w * 0.89, y0 + H * 0.45 + 28);
+    const lx = w < 560 ? w * 0.8 : w * 0.88;
+    ctx.fillText('deep water:', lx, y0 + H * 0.45); ctx.fillText('nothing comes', lx, y0 + H * 0.45 + 14); ctx.fillText('back from the bottom', lx, y0 + H * 0.45 + 28);
     // the diver with a red wetsuit
     const dx = diver.u * w, dy = yOf(diver.z);
     const suit = Float64Array.from(LAMBDA, (l) => 0.04 + 0.6 * clamp((l - 590) / 40, 0, 1));

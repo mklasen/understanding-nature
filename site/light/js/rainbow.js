@@ -120,8 +120,9 @@ export function initRainbow() {
   }
 
   function drawDrop(ctx, w, h) {
-    const R = Math.min(w, h) * (w < 560 ? 0.3 : 0.32);
-    const cx = w * 0.5, cy = h * 0.44;
+    const mob = w < 560;
+    const R = mob ? Math.min(w * 0.3, h * 0.25) : Math.min(w, h) * 0.32;
+    const cx = w * 0.5, cy = mob ? h * 0.32 : h * 0.44;
     const S = (p) => [cx + p[0] * R, cy - p[1] * R];
     // the drop
     const g = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.3, R * 0.1, cx, cy, R);
@@ -130,7 +131,7 @@ export function initRainbow() {
     ctx.strokeStyle = 'rgba(180,210,255,0.45)'; ctx.lineWidth = 1.2; ctx.stroke();
     ctx.font = '11.5px ui-sans-serif, system-ui, sans-serif'; ctx.fillStyle = 'rgba(237,240,247,0.75)'; ctx.textAlign = 'left';
     ctx.fillText('sunlight →', 10, 20);
-    ctx.fillStyle = 'rgba(174,182,204,0.7)'; ctx.fillText('a raindrop, ~1 mm across (drawn huge)', 10, h - 10);
+    ctx.fillStyle = 'rgba(174,182,204,0.7)'; ctx.fillText(mob ? 'a raindrop (drawn huge)' : 'a raindrop, ~1 mm across (drawn huge)', 10, mob ? cy + R + 18 : h - 10);
     const k = two ? 2 : 1;
     const path = (tr, col, lw, ext) => {
       ctx.strokeStyle = col; ctx.lineWidth = lw;
@@ -165,7 +166,7 @@ export function initRainbow() {
     }
     ctx.globalCompositeOperation = 'source-over';
     // inset: angle vs aim, with the pile-up at the top
-    const gx = w - (w < 560 ? 150 : 190) - 10, gy = h - 112, gw = w < 560 ? 150 : 190, gh = 86;
+    const gw = mob ? w - 40 : 190, gh = mob ? 62 : 86, gx = mob ? 20 : w - gw - 10, gy = h - gh - 26;
     ctx.fillStyle = 'rgba(11,9,18,0.75)'; ctx.fillRect(gx - 6, gy - 22, gw + 12, gh + 40);
     const amin = k === 1 ? 0 : 50, amax = k === 1 ? 45 : 90;
     const GX = (bb) => gx + bb * gw, GY = (a) => gy + gh - ((a - amin) / (amax - amin)) * gh;
@@ -177,7 +178,7 @@ export function initRainbow() {
     const ra = k === 1 ? 42 : 51;
     ctx.setLineDash([3, 3]); ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.beginPath(); ctx.moveTo(gx, GY(ra)); ctx.lineTo(gx + gw, GY(ra)); ctx.stroke(); ctx.setLineDash([]);
     ctx.font = '10.5px ui-sans-serif, system-ui, sans-serif'; ctx.fillStyle = 'rgba(237,240,247,0.8)'; ctx.textAlign = 'left';
-    ctx.fillText(`exit angle vs aim · rays crowd at ${ra}°`, gx - 2, gy - 8);
+    ctx.fillText(`exit angle vs aim: rays crowd at ${ra}°`, gx - 2, gy - 8);
     ctx.fillStyle = 'rgba(174,182,204,0.7)';
     ctx.fillText('centre', gx, gy + gh + 13); ctx.textAlign = 'right'; ctx.fillText('edge', gx + gw, gy + gh + 13);
   }
