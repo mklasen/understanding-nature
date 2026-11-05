@@ -219,3 +219,10 @@ down analytically from climatology. No continents (we show no coastlines, and sa
   at the polar front ~9.5 km; symbol size grows in each hemisphere's winter (jets are stronger then).
   Canvas says "schematic · heights ×N" (computed live: ≈ ×240 on a desktop, ×390 on a phone).
 - Tap the globe to set "your latitude" (inverse orthographic projection).
+
+## Card + share images
+- `card.jpg` (text-free) and `og.jpg` (title overlay, waves' layout) are 1200×630 frames of the real
+  sea-breeze model: a fresh run from 06:00 spun up to ~14:50 (onshore 4.5 m/s), framed 26 km offshore
+  to 68 km inland so the sea-breeze front's updraft and cumulus are in shot. Rendered in the page and
+  exported with `toDataURL` — not a painting.
+

@@ -39,6 +39,7 @@ export const EXPLAINERS = [
     title: 'Understanding Weather', short: 'Wind, clouds & storms',
     hook: 'Why does the wind blow?',
     blurb: 'Pressure, sea breezes, why storms spin, and how clouds form.',
+    image: 'weather/card.jpg',
     chapters: {
       breeze: 'The sea breeze', pressure: 'Highs and lows', spin: 'Why storms spin', friction: 'Friction and gusts',
       clouds: 'How clouds form', fronts: 'Fronts and rain', global: 'The global engine', summary: 'Weather vs climate',

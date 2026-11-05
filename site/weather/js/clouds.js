@@ -138,7 +138,9 @@ export function initClouds() {
       ctx.beginPath(); ctx.moveTo(X(T, 0), Y(0)); ctx.lineTo(X(T, ZMAX), Y(ZMAX)); ctx.stroke();
     }
     ctx.restore();
-    for (let T = Math.ceil(tmin / 10) * 10; T <= tmax; T += 10) if (X(T, 0) > pl + 6) ctx.fillText(`${T}°`, X(T, 0), h - pb + 10);
+    // label every 10 °C, or every 20 °C when ticks would collide (wide ranges on phones)
+    const tstep = X(10, 0) - X(0, 0) < 30 ? 20 : 10;
+    for (let T = Math.ceil(tmin / tstep) * tstep; T <= tmax; T += tstep) if (X(T, 0) > pl + 6 && X(T, 0) < cw - 8) ctx.fillText(`${T}°`, X(T, 0), h - pb + 10);
     ctx.fillText('temperature (slanted lines)', (pl + cw) / 2, h - 8);
     ctx.textAlign = 'right';
     for (let z = 0; z <= 12000; z += 2000) {
@@ -175,7 +177,14 @@ export function initClouds() {
     ctx.fillText('rising air', Math.min(cw - 52, xp + 6), Y(zl) + (xp > xe ? -12 : 12));
     ctx.fillStyle = '#9fd8a5';
     const zd = Math.min(lcl, ZMAX) * 0.45, id = Math.round(zd / P.dz);
-    if (zd > 300) { ctx.textAlign = 'right'; ctx.fillText('dew point', X(P.Td[id], zd) - 5, Y(zd)); }
+    // skip the label when it would crowd the cloud-base label (short charts on phones); the legend names it too
+    const roomy = lcl >= ZMAX || Math.abs(Y(zd) - (Y(lcl) - 8)) >= 16;
+    if (zd > 300 && roomy) {
+      // left of the line if it fits inside the chart, otherwise to its right
+      const xd = X(P.Td[id], zd), wd = ctx.measureText('dew point').width;
+      // only where it fits left of the line and clear of the ground; otherwise the legend carries it
+      if (xd - 5 - wd > pl + 2 && Y(0) - Y(zd) >= 10) { ctx.textAlign = 'right'; ctx.fillText('dew point', xd - 5, Y(zd)); }
+    }
 
     // ---- scene panel ----
     const sx = cw, sw = w - cw, cx = sx + sw * 0.5;
@@ -244,8 +253,10 @@ export function initClouds() {
     if (lcl < ZMAX && lcl > 30) {
       ctx.strokeStyle = 'rgba(142,197,255,0.7)'; ctx.setLineDash([6, 4]); ctx.lineWidth = 1.2;
       ctx.beginPath(); ctx.moveTo(pl, Y(lcl)); ctx.lineTo(w, Y(lcl)); ctx.stroke(); ctx.setLineDash([]);
-      ctx.fillStyle = '#b3d8ff'; ctx.font = font(small ? 10 : 11, 600); ctx.textAlign = 'left';
-      ctx.fillText(`cloud base ${fmtH(lcl)}`, pl + 4, Y(lcl) - 8);
+      ctx.fillStyle = '#b3d8ff'; ctx.font = font(small ? 10 : 11, 600);
+      // phones: right-align at the chart's edge, away from the dew-point and rising-air lines on the left
+      ctx.textAlign = small ? 'right' : 'left';
+      ctx.fillText(`cloud base ${fmtH(lcl)}`, small ? cw - 6 : pl + 4, Y(lcl) - 8);
     }
 
     // the parcel: on the chart and in the scene
