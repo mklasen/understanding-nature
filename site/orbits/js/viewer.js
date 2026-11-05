@@ -201,6 +201,7 @@ export class Viewer {
     for (const id in st.bodies) {
       const b = st.bodies[id];
       if (ground && id === 'earth') continue;
+      if (this.view.bodies && !this.view.bodies.includes(id)) continue;
       if (ground && v3.dot(v3.sub(b.pos, pose.site.pos), pose.site.up) < -b.r) continue; // below the horizon
       if (pose.eyeBody && id === pose.eyeBody) continue;
       const p = project(b.pos); if (!p) continue;

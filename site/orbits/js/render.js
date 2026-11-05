@@ -25,6 +25,9 @@ export const TEX = {
   jupiter(x, y, z) { const b = Math.sin(z * 14) * 0.5 + 0.5; return [200 + 30 * b, 160 + 30 * b, 120 + 20 * b]; },
   mars(x, y, z) { return Math.abs(z) > 0.93 ? [235, 225, 220] : [200 + 20 * Math.sin(x * 5 + y * 3), 105, 70]; },
   venus() { return [235, 215, 170]; },
+  saturn(x, y, z) { const b = Math.sin(z * 11) * 0.5 + 0.5; return [220 + 15 * b, 200 + 10 * b, 150 + 10 * b]; },
+  uranus() { return [170, 225, 232]; },
+  neptune(x, y, z) { return [95 + 10 * Math.sin(z * 9), 130, 245]; },
   mercury(x, y, z) { return [170 + 15 * Math.sin(x * 9 + z * 7), 162, 150]; },
 };
 

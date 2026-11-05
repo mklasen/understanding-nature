@@ -27,11 +27,11 @@ export const EXPLAINERS = [
     id: 'orbits', path: 'orbits/', status: 'live', category: 'space', theme: 'space',
     title: 'Understanding Orbits', short: 'Earth, Moon & Sun',
     hook: 'You are not sitting still.',
-    blurb: 'Day and night, seasons, the Moon, eclipses, orbits — and the corkscrew you trace through space.',
+    blurb: 'Day and night, seasons, the Moon, eclipses, orbits, rocket launches — and the corkscrew you trace through space.',
     image: 'orbits/card.jpg',
     chapters: {
       day: 'Day & night', seasons: 'Seasons', moon: 'The Moon', eclipses: 'Eclipses', falling: 'Falling sideways',
-      kepler: "Kepler's laws", retrograde: 'Backwards planets', speed: 'How fast are we going?', summary: 'Motion is relative',
+      kepler: "Kepler's laws", retrograde: 'Backwards planets', launches: 'Launch day', speed: 'How fast are we going?', summary: 'Motion is relative',
     },
   },
   {
@@ -71,6 +71,8 @@ export const XLINKS = [
   { from: 'orbits', chapter: 'moon', x: 'waves#tides', text: 'The Moon also stretches the oceans into tides' },
   { from: 'orbits', chapter: 'day', x: 'waves#tides', text: "Earth's spin under the Moon gives us two tides a day" },
   { from: 'orbits', chapter: 'seasons', x: 'weather', text: 'How the seasons drive the weather' },
+  { from: 'orbits', chapter: 'launches', x: 'orbits#falling', text: 'Same physics as the cannonball: a launch is falling sideways' },
+  { from: 'orbits', chapter: 'launches', x: 'orbits#moon', text: "Where the Moon will be when you get there" },
   { from: 'weather', chapter: 'spin', x: 'orbits#day', text: 'The spinning Earth underneath the wind' },
   { from: 'weather', chapter: 'friction', x: 'waves#wind', text: 'What the wind does to the sea' },
   { from: 'weather', chapter: 'clouds', x: 'light', text: 'Why are clouds white, and the sky blue?' },

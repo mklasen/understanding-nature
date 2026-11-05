@@ -23,6 +23,26 @@ The user asked for more interactive views, all in "the same or a similar environ
   ~1 h); 60-year rates 2.3 solar / 1.6 lunar per year; Mars opposition 19 Feb 2027 in Leo; Amsterdam first-quarter
   dusk Moon lit on the right, Sydney on the left, equator crescent lit at the bottom.
 
+## Chapter 8 — Launch day (added 5 Nov 2026)
+- Six launches on their real dates in the shared viewer: Mars 2020 (Hope 19 Jul, Tianwen-1 23 Jul, Perseverance
+  30 Jul 2020), the Mars window open now (MMX launched 20 Oct 2026 JST; ESCAPADE's Earth flyby 7 Nov 2026, arrivals
+  Aug/Sep 2027), Apollo 11 (16 Jul 1969), Crew Dragon Demo-2 (30 May 2020 19:22:45 UTC), Artemis II (1 Apr 2026,
+  far-side flyby 6 Apr, home 10–11 Apr), Voyager 2 (20 Aug 1977; Jupiter 1979, Saturn 1981, Uranus 1986, Neptune 1989).
+- Paths are **Lambert solutions** (`orbitmech.js`, universal variables) between real launch and arrival dates, then
+  two-body propagation (safeguarded Newton). Voyager 2 = patched conics through the real encounter dates.
+  Moon trips are Earth-centred two-body arcs without the Moon's pull — labelled "sketch" on screen; they're drawn in
+  Earth's frame. Arrival *months* only for MMX/ESCAPADE → mid-month used, labelled approximate.
+- Validation: Perseverance departure v∞ 3.8 km/s (real ≈ 3.6); Apollo TLI 10.84 km/s (real ≈ 10.8); Sun 10.3° above
+  Tranquility Base at landing (mission planning: 10.8°); Demo-2: KSC exactly under the ISS plane at launch.
+- That last check needed a model fix: the Moon's face now follows its *mean* longitude (uniform spin) instead of
+  pointing exactly at Earth — i.e. libration in longitude is now modelled (it moved the Apollo sun angle from 3° to 10°).
+- Mars windows "coming up" are computed from the model (Mars ≈ 44° ahead of Earth, the Hohmann phase angle).
+  Future missions only named with "plans can still change" (Tianwen-3, Rosalind Franklin for late 2028).
+- Sources (checked 5 Nov 2026): Wikipedia/NASA/JAXA/ESA pages for Artemis II, Crew Dragon Demo-2 (NASA Kennedy blog:
+  "instantaneous" window), Apollo 11 (NASA history; Nature 1969 on Sun-elevation-driven site choice), Voyager (NASA),
+  MMX (ESA/JAXA, launch 20 Oct 2026), ESCAPADE (NASA blog 2 Nov 2026), Mars 2020 trio (Space.com).
+- Saturn, Uranus and Neptune added to the model (J2000 mean elements).
+
 ## Architecture (v1, superseded where noted above)
 - Static site, vanilla ES modules, **Canvas2D only** (no WebGL — renders the same everywhere, incl. the GPU-less
   test browser). nginx:alpine with `./site` bind-mounted. No build step, no CDN, no dependencies.

@@ -4,9 +4,9 @@
 import { PLANETS, planetPos, AU, DEG, TAU, R_SUN, TILT, MOON_INCL } from './astro.js';
 import { mat, v3 } from './draw.js';
 
-export const RADIUS = { sun: R_SUN, mercury: 2440, venus: 6052, earth: 6371, moon: 1737.4, mars: 3390, jupiter: 69911 };
-export const COLOR = { sun: '#ffd27a', mercury: '#b9b2a8', venus: '#f1d9a6', earth: '#5fb0f0', moon: '#d7dcef', mars: '#ff8a5c', jupiter: '#e0b98a' };
-export const NAME = { sun: 'Sun', mercury: 'Mercury', venus: 'Venus', earth: 'Earth', moon: 'Moon', mars: 'Mars', jupiter: 'Jupiter' };
+export const RADIUS = { sun: R_SUN, mercury: 2440, venus: 6052, earth: 6371, moon: 1737.4, mars: 3390, jupiter: 69911, saturn: 58232, uranus: 25362, neptune: 24622 };
+export const COLOR = { sun: '#ffd27a', mercury: '#b9b2a8', venus: '#f1d9a6', earth: '#5fb0f0', moon: '#d7dcef', mars: '#ff8a5c', jupiter: '#e0b98a', saturn: '#e8d3a0', uranus: '#a9e0e8', neptune: '#6f8fff' };
+export const NAME = { sun: 'Sun', mercury: 'Mercury', venus: 'Venus', earth: 'Earth', moon: 'Moon', mars: 'Mars', jupiter: 'Jupiter', saturn: 'Saturn', uranus: 'Uranus', neptune: 'Neptune' };
 const PL = Object.fromEntries(PLANETS.map((p) => [p.name.toLowerCase(), p]));
 
 // Lunar theory with the main perturbations (≈0.1–0.3° in position, ≈0.5% in distance): mean longitude L, mean anomaly M,
@@ -28,11 +28,12 @@ export const gmst = (d) => ((280.46061837 + 360.98564736629 * d) % 360) * DEG;
 export function earthFrame(d, tiltDeg = TILT) {
   return mat.mul(mat.rotX(-tiltDeg * DEG), mat.rotZ(gmst(d)));
 }
-// Moon's body frame (tidally locked): x → Earth, z ≈ ecliptic north, y = east
-export function moonFrame(moonToEarth) {
-  const x = v3.norm(moonToEarth);
-  const z = v3.norm(v3.sub([0, 0, 1], v3.mul(x, x[2])));
-  const y = v3.cross(z, x);
+// Moon's body frame. The Moon spins uniformly, so its face points at Earth's *mean* direction (mean longitude L),
+// not the true one — the difference is the ±8° libration in longitude we see from Earth. z ≈ ecliptic north
+// (the real spin axis is 1.5° off; libration in latitude is ignored). x → (mean) Earth, y = east.
+export function moonFrame(d) {
+  const L = (218.316 + 13.176396 * d) * DEG;
+  const x = [-Math.cos(L), -Math.sin(L), 0], z = [0, 0, 1], y = v3.cross(z, x);
   return [[x[0], y[0], z[0]], [x[1], y[1], z[1]], [x[2], y[2], z[2]]];
 }
 
@@ -50,7 +51,7 @@ export class World {
     const E = out.bodies.earth;
     if (E) E.frame = earthFrame(d, this.tilt);
     const M = out.bodies.moon;
-    if (M && E) M.frame = moonFrame(v3.sub(E.pos, M.pos));
+    if (M) M.frame = moonFrame(d);
     return out;
   }
   // orbit path of a body for drawing (km), relative to its primary at time d

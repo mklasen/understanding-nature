@@ -51,8 +51,9 @@
   <a href="#falling"><i>5</i>Falling sideways</a>
   <a href="#kepler"><i>6</i>Kepler's laws</a>
   <a href="#retrograde"><i>7</i>Backwards planets</a>
-  <a href="#speed"><i>8</i>How fast are we going?</a>
-  <a href="#summary"><i>9</i>Motion is relative</a>
+  <a href="#launches"><i>8</i>Launch day</a>
+  <a href="#speed"><i>9</i>How fast are we going?</a>
+  <a href="#summary"><i>10</i>Motion is relative</a>
 </nav>
 
 <main>
@@ -304,10 +305,32 @@
   </div>
 </section>
 
-<!-- ============ 8. HOW FAST ============ -->
-<section class="chapter" id="speed" data-module="speed.js">
+<!-- ============ 8. LAUNCH DAY ============ -->
+<section class="chapter" id="launches" data-module="launches.js">
   <div class="text">
     <p class="num">8</p>
+    <h2>Launch day: why that date?</h2>
+    <p>A rocket can't just leave whenever it's ready. The target is moving, and so are we. After a few minutes of engine burn, a spacecraft coasts almost the whole way — falling around the Sun (or the Earth), exactly like the cannonball in chapter 5. That fall only ends at the target if you leave when everything is lined up. That moment is called a <strong>launch window</strong>.</p>
+    <p>Some windows open every 26 months, some once a month, some for one second a day — and one opened once in 175 years.</p>
+    <p class="after">Each path drawn here is calculated, not sketched by hand: given where Earth is on launch day and where the target will be on arrival day, there is exactly <em>one</em> orbit around the Sun that connects them (this is called Lambert's problem). Real missions add small course corrections along the way; those are left out.</p>
+    <p class="try">Pick a launch. Each one jumps to its real date — let time run and watch it fly. Drag and zoom as everywhere else.</p>
+    <aside class="aha">
+      <p>A launch date isn't picked from a calendar. It's the moment the solar system opens a door — and the size of the door depends on where you're going: weeks every 26 months for Mars, about a day a month for an Apollo landing site, one second for a space station.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <div class="mission-list" id="launch-list"></div>
+    <div class="seg" id="launch-sub" style="display:none"></div>
+    <canvas id="launch-canvas" class="panel-canvas square" aria-label="Historic and current launches on their real dates"></canvas>
+    <p class="why" id="launch-live"></p>
+    <div class="launch-why" id="launch-why"></div>
+  </div>
+</section>
+
+<!-- ============ 9. HOW FAST ============ -->
+<section class="chapter" id="speed" data-module="speed.js">
+  <div class="text">
+    <p class="num">9</p>
     <h2>How fast are you going? It depends who's asking</h2>
     <p>Sit perfectly still. You are spinning with the Earth at up to 1,670 km/h. The Earth is carrying you around the Sun at <strong>107,000 km/h</strong>. The Sun is carrying all of us around the Milky Way at roughly <strong>830,000 km/h</strong> — one lap every 230 million years. And the whole galaxy is moving through the universe.</p>
     <p>So what's your <em>real</em> speed? There isn't one. Every one of those numbers is true — each measured against something different. Speed only means something <strong>relative to something else</strong>.</p>

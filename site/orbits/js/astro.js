@@ -61,6 +61,9 @@ export const PLANETS = [
   { name: 'Earth', a: 1.00000, e: 0.01671, i: 0.000, L: 100.4645, w: 102.9377, O: 0, P: 365.256, r: 6371, color: '#5fb0f0' },
   { name: 'Mars', a: 1.52368, e: 0.09340, i: 1.850, L: 355.4533, w: 336.0602, O: 49.558, P: 686.980, r: 3390, color: '#ff8a5c' },
   { name: 'Jupiter', a: 5.20260, e: 0.04849, i: 1.303, L: 34.3964, w: 14.7284, O: 100.464, P: 4332.59, r: 69911, color: '#e0b98a' },
+  { name: 'Saturn', a: 9.53707, e: 0.05386, i: 2.485, L: 49.9443, w: 92.5988, O: 113.663, P: 10759.22, r: 58232, color: '#e8d3a0' },
+  { name: 'Uranus', a: 19.1913, e: 0.04726, i: 0.773, L: 313.232, w: 170.954, O: 74.017, P: 30685.4, r: 25362, color: '#a9e0e8' },
+  { name: 'Neptune', a: 30.0690, e: 0.00859, i: 1.770, L: 304.880, w: 44.964, O: 131.784, P: 60189.0, r: 24622, color: '#6f8fff' },
 ];
 // heliocentric ecliptic position [AU] at day d since J2000
 export function planetPos(p, d) {

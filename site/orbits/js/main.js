@@ -13,5 +13,6 @@ bootChapters((f) => import(`./${f}`), [
   ['falling.js', 'initFalling'],
   ['kepler.js', 'initKepler'],
   ['retrograde.js', 'initRetrograde'],
+  ['launches.js', 'initLaunches'],
   ['speed.js', 'initSpeed'],
 ]);
