@@ -17,7 +17,7 @@ export const EXPLAINERS = [
     title: 'Understanding Waves', short: 'Waves & tides',
     hook: "There's never the same wave twice.",
     blurb: 'Wind, swell, tsunamis, the beach — and why the tide is something else entirely.',
-    image: 'waves/og.jpg',
+    image: 'waves/card.jpg',
     chapters: {
       crowd: 'Every wave is a crowd', wind: 'Making waves', energy: 'Energy, not water', swell: 'Swell',
       tsunami: 'Tsunamis', tides: 'Tides', beach: 'The beach', ripples: 'Ripples', summary: 'Waves, tsunamis, tides',
@@ -28,7 +28,7 @@ export const EXPLAINERS = [
     title: 'Understanding Orbits', short: 'Earth, Moon & Sun',
     hook: 'You are not sitting still.',
     blurb: 'Day and night, seasons, the Moon, eclipses, orbits — and the corkscrew you trace through space.',
-    image: 'orbits/og.jpg',
+    image: 'orbits/card.jpg',
     chapters: {
       day: 'Day & night', seasons: 'Seasons', moon: 'The Moon', eclipses: 'Eclipses', falling: 'Falling sideways',
       kepler: "Kepler's laws", retrograde: 'Backwards planets', speed: 'How fast are we going?', summary: 'Motion is relative',

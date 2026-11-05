@@ -1,0 +1,28 @@
+{
+  "project": "understanding-nature",
+  "tasks": [
+    {
+      "title": "Shared kit + catalogue + landing",
+      "state": "done"
+    },
+    {
+      "title": "Port waves + orbits",
+      "state": "done"
+    },
+    {
+      "title": "Weather explainer",
+      "state": "todo"
+    },
+    {
+      "title": "Light & colour explainer",
+      "state": "todo"
+    }
+  ],
+  "activity": [],
+  "status": "active",
+  "headline": "Understanding Nature: a library of interactive explainers",
+  "summary": "Shared kit (themes, controls, chapter loader, cross-links, catalogue), landing page with category grid; waves + orbits live; weather & light being built.",
+  "next": "Publish to GitHub Pages; start weather + light sessions",
+  "url": "https://understanding-nature.helios.users.ctx7.dev",
+  "updated": "2026-11-05T17:48:56.744Z"
+}

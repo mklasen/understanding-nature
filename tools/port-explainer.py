@@ -60,6 +60,8 @@ def main():
     css = (src / 'css' / 'style.css').read_text()
     own = []
     own += [l for l in css.splitlines() if re.match(r'\s*\.card\.(a|b)\b', l)]
+    # single-line rules aimed at this explainer's own element ids stay with the explainer
+    own += [l for l in (css[:css.index(marker)] if marker and marker in css else css).splitlines() if re.match(r'#[\w-]+[^{]*\{.*\}\s*$', l)]
     if marker and marker in css:
         own.append(css[css.index(marker):])
     (dest / 'css').mkdir(exist_ok=True)

@@ -45,7 +45,7 @@ a.tile:hover { transform: translateY(-3px); border-color: var(--t-accent, var(--
 .tile.planned .art { aspect-ratio: 1200 / 380; }
 /* generated art for explainers that don't have an image yet */
 .tile .art.gen { background: var(--gen); }
-.tile .art.gen span { position: absolute; left: 20px; bottom: 14px; z-index: 1; font: 400 44px/1 var(--serif); color: rgba(255,255,255,0.9); text-shadow: 0 2px 20px rgba(0,0,0,0.4); }
+.tile .art.gen span { position: absolute; left: 20px; bottom: 14px; right: 20px; z-index: 1; font: 400 clamp(24px, 2.4vw, 34px)/1.1 var(--serif); color: rgba(255,255,255,0.9); text-shadow: 0 2px 20px rgba(0,0,0,0.4); }
 
 .how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin: 72px 0 20px; padding-top: 40px; border-top: 1px solid var(--line); }
 .how h3 { font: 400 22px var(--serif); margin: 0 0 8px; }
@@ -63,3 +63,5 @@ a.tile:hover { transform: translateY(-3px); border-color: var(--t-accent, var(--
   .filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -16px 20px; padding: 0 16px; }
   .filters button { flex: none; }
 }
+
+.lhero .btn { text-decoration: none; display: inline-block; }
