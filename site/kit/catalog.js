@@ -35,7 +35,7 @@ export const EXPLAINERS = [
     },
   },
   {
-    id: 'weather', path: 'weather/', status: 'building', category: 'weather', theme: 'sky',
+    id: 'weather', path: 'weather/', status: 'live', category: 'weather', theme: 'sky',
     title: 'Understanding Weather', short: 'Wind, clouds & storms',
     hook: 'Why does the wind blow?',
     blurb: 'Pressure, sea breezes, why storms spin, and how clouds form.',
@@ -46,7 +46,7 @@ export const EXPLAINERS = [
     },
   },
   {
-    id: 'light', path: 'light/', status: 'building', category: 'light', theme: 'light',
+    id: 'light', path: 'light/', status: 'live', category: 'light', theme: 'light',
     title: 'Understanding Light & Colour', short: 'Why the sky is blue',
     hook: 'Why is the sky blue — and sunsets red?',
     blurb: 'Scattering, rainbows at 42°, the colour of the sea, and light as a wave.',
