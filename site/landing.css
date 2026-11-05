@@ -1,0 +1,65 @@
+/* Landing page — the library front door. Builds on kit/kit.css. */
+.lhero { position: relative; min-height: min(92vh, 860px); display: flex; align-items: center; overflow: hidden; }
+#lhero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.lhero::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(var(--bg-rgb), 0.75) 0%, rgba(var(--bg-rgb), 0.15) 60%, rgba(var(--bg-rgb), 0) 100%),
+              linear-gradient(180deg, rgba(var(--bg-rgb), 0) 70%, var(--bg) 100%);
+}
+.lhero-copy { position: relative; z-index: 2; padding: 90px clamp(20px, 7vw, 120px) 120px; max-width: 760px; }
+.lhero-copy h1 { margin-bottom: 20px; }
+.lhero-copy .lede { margin: 0 0 28px; }
+
+#library { max-width: 1320px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 60px) 40px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 26px; }
+.filters button {
+  font: 500 14px var(--sans); color: var(--ink-soft); background: transparent; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; transition: all .2s;
+}
+.filters button:hover { border-color: var(--accent); color: var(--ink); }
+.filters button.on { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.filters button .n { opacity: 0.6; margin-left: 4px; font-variant-numeric: tabular-nums; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.tile {
+  position: relative; display: flex; flex-direction: column; text-decoration: none; color: var(--ink);
+  background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+}
+a.tile:hover { transform: translateY(-3px); border-color: var(--t-accent, var(--accent)); box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35); }
+.tile .art { aspect-ratio: 1200 / 630; background-size: cover; background-position: center; position: relative; }
+.tile .art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.35)); }
+.tile .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.tile .cat { font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--t-accent, var(--accent)); font-weight: 600; }
+.tile h2 { font: 400 26px/1.15 var(--serif); margin: 0; }
+.tile .hook { font: italic 400 17px/1.35 var(--serif); color: #fff; margin: 0; }
+.tile .blurb { color: var(--ink-soft); font-size: 14.5px; margin: 0; }
+.tile .meta { margin-top: auto; padding-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--ink-dim); }
+.tile .go { color: var(--t-accent, var(--accent)); font-weight: 600; }
+.badge { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft); }
+.badge.building { border-color: rgba(var(--accent-rgb), 0.5); color: var(--accent); }
+.badge.building::before { content: "● "; animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.3; } }
+.tile.soon { opacity: 0.88; }
+.tile.planned { opacity: 0.62; }
+.tile.planned .art { aspect-ratio: 1200 / 380; }
+/* generated art for explainers that don't have an image yet */
+.tile .art.gen { background: var(--gen); }
+.tile .art.gen span { position: absolute; left: 20px; bottom: 14px; z-index: 1; font: 400 44px/1 var(--serif); color: rgba(255,255,255,0.9); text-shadow: 0 2px 20px rgba(0,0,0,0.4); }
+
+.how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin: 72px 0 20px; padding-top: 40px; border-top: 1px solid var(--line); }
+.how h3 { font: 400 22px var(--serif); margin: 0 0 8px; }
+.how p { color: var(--ink-soft); margin: 0; font-size: 15.5px; }
+.lfoot { text-align: center; color: var(--ink-dim); font-size: 13.5px; padding: 20px 16px 48px; }
+.lfoot a { color: var(--ink-soft); }
+
+@media (max-width: 760px) {
+  .lhero { min-height: 640px; align-items: flex-end; }
+  .lhero::after { background: linear-gradient(180deg, rgba(var(--bg-rgb), 0.1) 0%, rgba(var(--bg-rgb), 0.55) 45%, var(--bg) 100%); }
+  .lhero-copy { padding: 0 18px 56px; }
+  .grid { grid-template-columns: 1fr; gap: 14px; }
+  .tile h2 { font-size: 23px; }
+  .how { grid-template-columns: 1fr; gap: 22px; margin-top: 48px; }
+  .filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -16px 20px; padding: 0 16px; }
+  .filters button { flex: none; }
+}

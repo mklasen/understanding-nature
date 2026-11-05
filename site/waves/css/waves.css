@@ -1,0 +1,28 @@
+/* waves: explainer-specific styles (shared styles live in kit/kit.css) */
+[data-theme="ocean"] {
+  /* names used by the waves chapters */
+  --sea: var(--accent); --sea-2: #2a7ea8; --foam: #f4f8fa; --wind: #9fd8a5;
+  --sun: #f5c26b; --moon: #c9d4ff; --tide: #b59cff;
+}
+.ingredients li::before { content: "≈"; color: var(--wind); }
+
+/* the 3D sea in the wind lab */
+.ocean-wrap { position: relative; }
+.ocean-canvas { width: 100%; height: clamp(300px, 44vh, 460px); display: block; border-radius: 14px; }
+.ocean-badge {
+  position: absolute; left: 14px; top: 14px; font-size: 13px; padding: 6px 12px; border-radius: 999px;
+  background: rgba(var(--bg-rgb), 0.55); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.15);
+}
+@media (max-width: 960px) { .ocean-canvas { height: min(78vw, 48vh); } }
+
+/* summary: waves · tsunamis · tides */
+.summary { max-width: 1300px; }
+.cards { grid-template-columns: repeat(3, 1fr); }
+.card dl { grid-template-columns: 96px 1fr; }
+.card.wave { background: linear-gradient(160deg, rgba(63, 179, 201, 0.18), rgba(13, 39, 56, 0.9) 60%); }
+.card.tsunami { background: linear-gradient(160deg, rgba(255, 154, 122, 0.16), rgba(13, 39, 56, 0.9) 60%); }
+.card.tide { background: linear-gradient(160deg, rgba(181, 156, 255, 0.18), rgba(13, 39, 56, 0.9) 60%); }
+.card.wave h3 { color: var(--sea); }
+.card.tsunami h3 { color: var(--warn); }
+.card.tide h3 { color: var(--tide); }
+@media (max-width: 960px) { .cards { grid-template-columns: 1fr; } }

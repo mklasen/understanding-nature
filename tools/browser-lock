@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Shared-browser lock for Claude sessions on this server (they all drive one Chromium).
+#   tools/browser-lock acquire <session-name>   # waits until free (stale locks expire after 15 min)
+#   tools/browser-lock release <session-name>
+#   tools/browser-lock status
+LOCK=/tmp/browser-session.lock
+STALE=900
+cmd=${1:-status}; who=${2:-unknown}
+age() { echo $(( $(date +%s) - $(stat -c %Y "$LOCK" 2>/dev/null || date +%s) )); }
+case "$cmd" in
+  acquire)
+    while ! mkdir "$LOCK" 2>/dev/null; do
+      if [ "$(cat "$LOCK/owner" 2>/dev/null)" = "$who" ]; then touch "$LOCK"; echo "already held by $who"; exit 0; fi
+      if [ "$(age)" -gt "$STALE" ]; then echo "breaking stale lock held by $(cat "$LOCK/owner" 2>/dev/null)"; rm -rf "$LOCK"; continue; fi
+      echo "browser busy ($(cat "$LOCK/owner" 2>/dev/null), $(age)s) — waiting…"; sleep 10
+    done
+    echo "$who" > "$LOCK/owner"; echo "browser acquired by $who" ;;
+  release)
+    if [ "$(cat "$LOCK/owner" 2>/dev/null)" = "$who" ]; then rm -rf "$LOCK"; echo "browser released"; else echo "not held by $who (owner: $(cat "$LOCK/owner" 2>/dev/null || echo none))"; fi ;;
+  status)
+    if [ -d "$LOCK" ]; then echo "held by $(cat "$LOCK/owner") for $(age)s"; else echo "free"; fi ;;
+esac

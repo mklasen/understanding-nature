@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding Orbits — how the Earth, Moon and Sun move, and how we move through the universe</title>
+<meta name="description" content="An interactive guide to day and night, seasons, the Moon, orbits — and the giant corkscrew you're tracing through space while sitting still.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#05070f">
+<link rel="canonical" href="https://mklasen.github.io/understanding-nature/orbits/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Understanding Nature">
+<meta property="og:title" content="Understanding Orbits — how the Earth, Moon and Sun move, and how we move through the universe">
+<meta property="og:description" content="An interactive guide to day and night, seasons, the Moon, orbits — and the giant corkscrew you're tracing through space while sitting still.">
+<meta property="og:url" content="https://mklasen.github.io/understanding-nature/orbits/">
+<meta property="og:image" content="https://mklasen.github.io/understanding-nature/orbits/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mklasen.github.io/understanding-nature/orbits/og.jpg">
+<link rel="stylesheet" href="../kit/kit.css">
+<link rel="stylesheet" href="css/orbits.css">
+</head>
+<body data-theme="space" data-explainer="orbits" data-root="../">
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <canvas id="hero-orrery" aria-label="A live model of the inner solar system"></canvas>
+  <div class="hero-copy">
+    <p class="kicker">An interactive guide to how we move</p>
+    <h1>You are not<br>sitting still.</h1>
+    <p class="lede">Right now you're spinning with the Earth, falling around the Sun, and sweeping around the galaxy. Why is a day 24 hours? Why are there seasons? Why does the Moon change shape? Drag the sliders and see for yourself.</p>
+  </div>
+  <div class="hero-caption">
+    <p><b>Live:</b> the real Sun, planets and Moon right now. Drag to turn, pinch to zoom, tap a planet to fly there.</p>
+    <div id="hero-views"></div>
+    <p class="hero-note" id="hero-note"></p>
+    <div class="btn-row">
+      <button class="btn ghost small" id="hero-scale">True sizes</button>
+      <button class="btn ghost small" id="hero-speed">Speed</button>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#day">Begin <span>↓</span></a>
+</header>
+
+<nav class="toc" aria-label="Chapters">
+  <a href="#day"><i>1</i>Day &amp; night</a>
+  <a href="#seasons"><i>2</i>Seasons</a>
+  <a href="#moon"><i>3</i>The Moon</a>
+  <a href="#eclipses"><i>4</i>Eclipses</a>
+  <a href="#falling"><i>5</i>Falling sideways</a>
+  <a href="#kepler"><i>6</i>Kepler's laws</a>
+  <a href="#retrograde"><i>7</i>Backwards planets</a>
+  <a href="#speed"><i>8</i>How fast are we going?</a>
+  <a href="#summary"><i>9</i>Motion is relative</a>
+</nav>
+
+<main>
+<!-- ============ 1. DAY & NIGHT ============ -->
+<section class="chapter" id="day" data-module="day.js">
+  <div class="text">
+    <p class="num">1</p>
+    <h2>Why a day is 24 hours (and also isn't)</h2>
+    <p>Day and night are simple: the Earth is a ball lit from one side, and it <strong>spins</strong>. Your side turns into the sunlight (sunrise), across it (noon), and out again (sunset).</p>
+    <p>But here's a puzzle. Measure one full turn of the Earth against the distant stars and you get <strong>23 hours 56 minutes</strong>. Yet noon-to-noon takes 24 hours. Where do the extra four minutes come from?</p>
+    <p class="after">While the Earth spins, it's also travelling along its orbit. After one full turn, the Sun is no longer quite in the same direction — so the Earth has to turn <em>a little bit more</em> to bring the Sun back overhead.</p>
+    <p class="try">Watch the red dot (you, at noon). Then shrink the year to a handful of days to make the effect huge. Or make the Earth spin the other way, like Venus.</p>
+    <aside class="aha">
+      <p>In one year the Earth spins about <strong>366¼ times</strong> relative to the stars — but we only see <strong>365¼ sunrises</strong>. Going once around the Sun "uses up" one whole turn.</p>
+      <p>Astronomers call the star-to-star turn the <em>sidereal day</em>; our clocks run on the <em>solar day</em>. Both are real. They're just measured against different things — the first hint that <strong>motion depends on what you measure it against</strong>.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="day-canvas" class="panel-canvas square" aria-label="Earth seen from above the North Pole, orbiting the Sun"></canvas>
+    <p class="scale-note"><b>Not to scale:</b> Earth drawn thousands of times too big for its orbit, so you can see the dot. Seen from above the North Pole; the tilt is left out until the next chapter.</p>
+    <canvas id="day-timeline" class="panel-canvas chart" aria-label="Timeline of one turn versus one solar day"></canvas>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Days in a year <output id="day-year-out"></output></span>
+        <input type="range" id="day-year" min="0" max="1" step="0.001" value="1">
+      </label>
+      <div class="btn-row">
+        <button class="btn" id="day-play">Pause</button>
+        <button class="btn ghost" id="day-real">Real Earth</button>
+        <button class="btn ghost" id="day-retro">Spin the other way</button>
+      </div>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">One turn vs the stars</span><span class="ro-value" id="day-sid">23 h 56 m</span></div>
+      <div><span class="ro-label">Noon to noon</span><span class="ro-value" id="day-sol">24 h 00 m</span></div>
+      <div><span class="ro-label">Extra turning needed</span><span class="ro-value" id="day-extra">0.99°</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. SEASONS ============ -->
+<section class="chapter" id="seasons" data-module="seasons.js">
+  <div class="text">
+    <p class="num">2</p>
+    <h2>Seasons: it's the tilt, not the distance</h2>
+    <p>Ask people why summer is warm and many say: "because we're closer to the Sun." It's a very reasonable guess. It's also not the reason. The Earth is actually <strong>closest to the Sun in early January</strong> — in the middle of the northern winter.</p>
+    <p>The real reason is that the Earth's spin axis is <strong>tilted by 23.4°</strong>, and it keeps pointing the same way in space (towards the North Star) all year round.</p>
+    <p class="after">In June the northern half leans towards the Sun. Sunlight hits it more directly — concentrated on less ground — and the Sun stays up longer. Double win: <em>stronger</em> sunlight, for <em>more hours</em>. Six months later the same tilt leans the north away, and the south gets its summer.</p>
+    <p class="after">The distance does change — by about 3%, giving roughly 7% more sunlight in January than in July. That's real, but it's small next to the tilt effect, which more than triples a mid-latitude's daily sunlight between winter and summer.</p>
+    <p class="try">Scrub through the year in each view — from above, beside Earth (watch your latitude's yellow day and blue night arcs), and standing on the ground (watch the Sun's path climb and sink). Then set the tilt to <button class="link" data-tilt="0">0°</button> — no seasons — or to <button class="link" data-tilt="90">90°</button>, like Uranus. Back to <button class="link" data-tilt="23.44">Earth's 23.4°</button>.</p>
+    <aside class="aha">
+      <p>If distance caused the seasons, the whole planet would have summer at the same time. Instead, when it's summer in Amsterdam it's winter in Sydney — <strong>opposite seasons in opposite hemispheres</strong> is the giveaway that it's the tilt.</p>
+      <p>The yellow and blue lines on the globe are the tropics and polar circles: they sit exactly at the tilt angle. Change the tilt and they move — they're not geography, they're geometry.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="seasons-canvas" class="panel-canvas square" aria-label="Earth's tilted orbit, a close-up beside Earth, and the Sun's path across your sky"></canvas>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Date <output id="seasons-date-out"></output></span>
+        <input type="range" id="seasons-date" min="0" max="365" step="0.25" value="172">
+      </label>
+      <label class="ctl">
+        <span class="ctl-label">Axial tilt <output id="seasons-tilt-out"></output></span>
+        <input type="range" id="seasons-tilt" min="0" max="90" step="0.1" value="23.44">
+      </label>
+      <label class="ctl">
+        <span class="ctl-label">Your latitude <output id="seasons-lat-out"></output></span>
+        <input type="range" id="seasons-lat" min="-90" max="90" step="0.5" value="52">
+      </label>
+    </div>
+    <div class="readout grid4">
+      <div><span class="ro-label">Daylight</span><span class="ro-value" id="seasons-day">—</span></div>
+      <div><span class="ro-label">Sun height at noon</span><span class="ro-value" id="seasons-noon">—</span></div>
+      <div><span class="ro-label">Sunlight per m² (24 h avg)</span><span class="ro-value" id="seasons-ins">—</span></div>
+      <div><span class="ro-label">Distance to Sun</span><span class="ro-value" id="seasons-dist">—</span></div>
+    </div>
+    <p class="why" id="seasons-why"></p>
+    <div class="seg" id="seasons-chart-mode"><button class="on" data-mode="day">Daylight hours</button><button data-mode="ins">Sunlight energy</button></div>
+    <canvas id="seasons-chart" class="panel-canvas chart" aria-label="Daylight over the year for your latitude and its mirror in the other hemisphere"></canvas>
+  </div>
+</section>
+
+<!-- ============ 3. THE MOON ============ -->
+<section class="chapter" id="moon" data-module="moon.js">
+  <div class="text">
+    <p class="num">3</p>
+    <h2>The Moon is always half lit</h2>
+    <p>The Moon makes no light of its own. The Sun always lights exactly <strong>half</strong> of it — the half facing the Sun. As the Moon circles us every 29½ days, we see that lit half from different angles: all of it (full Moon), none of it (new Moon), and everything in between.</p>
+    <p>It is <em>not</em> Earth's shadow, as is often thought. Earth's shadow points straight away from the Sun, and the Moon only passes through it during a lunar eclipse.</p>
+    <p class="after">Which side of the Moon is lit — right, left, top or bottom — depends on <em>where</em> you are and <em>when</em> you look. The rule never changes: <strong>the lit side points at the Sun</strong>, even when the Sun is below the horizon. In the evening, a growing Moon's lit side points down towards where the Sun has set: lower right seen from Europe, lower left from Australia, and straight down near the equator, where a crescent lies on its back like a smile. As the Moon arcs across the sky during the night, its lit side keeps pointing at the hidden Sun — so it slowly turns.</p>
+    <p class="after">And it always shows us the same face. That's not because it doesn't spin — it spins <strong>exactly once per orbit</strong>. Billions of years ago, Earth's gravity raised tides in the young Moon's rock, and the friction braked its spin until it matched its orbit. This is called <em>tidal locking</em>.</p>
+    <p class="after">The same tides are still at work on us: the Moon's pull on our oceans (see <a href="https://mklasen.github.io/understanding-waves/#tides">Understanding Waves</a>) slowly brakes Earth's spin — days get about 2 milliseconds longer per century — and pushes the Moon <strong>3.8 cm further away every year</strong>.</p>
+    <p class="try">In the sky view, compare <button class="link" data-sky="ams-fq">a half Moon at dusk in Amsterdam</button>, <button class="link" data-sky="syd-fq">the same Moon from Sydney</button>, <button class="link" data-sky="eq-cr">an evening crescent at the equator</button> and <button class="link" data-sky="ams-lq">a half Moon at dawn</button>. Switch between the views above the picture, drag to look around, pinch or use + to zoom, and press ▶ to run time.</p>
+    <p class="try">Slide through a month from above. Then stop the Moon spinning and look again from the ground. And try True sizes: the Moon is much farther away than most drawings suggest.</p>
+    <aside class="aha">
+      <p>There is no permanent "dark side of the Moon". There's a <em>far side</em> we never see from Earth — and at new Moon, it's in full sunshine.</p>
+      <p>The full Moon rises as the Sun sets, because it's opposite the Sun. A thin evening crescent sets soon after the Sun, because it's next to it. Once you see the geometry, you can tell the time from the Moon.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="moon-canvas" class="panel-canvas square" aria-label="Earth, Moon and Sun — explore from above, from space, or from the ground"></canvas>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Days since new Moon <output id="moon-age-out">—</output></span>
+        <input type="range" id="moon-age" min="0" max="29.5" step="0.05" value="0">
+      </label>
+      <div class="btn-row">
+        <div class="seg" id="moon-place"><button class="on" data-place="ams">Amsterdam</button><button data-place="eq">Equator</button><button data-place="syd">Sydney</button></div>
+        <button class="btn ghost" id="moon-unlock">Stop the Moon spinning</button>
+      </div>
+    </div>
+    <div class="readout grid4">
+      <div><span class="ro-label">Phase</span><span class="ro-value" id="moon-phase">—</span></div>
+      <div><span class="ro-label">Lit, as seen from Earth</span><span class="ro-value" id="moon-lit">—</span></div>
+      <div><span class="ro-label">Rises</span><span class="ro-value" id="moon-rise">—</span></div>
+      <div><span class="ro-label">Highest</span><span class="ro-value" id="moon-high">—</span></div>
+    </div>
+    <p class="why" id="moon-why"></p>
+  </div>
+</section>
+
+<!-- ============ 4. ECLIPSES ============ -->
+<section class="chapter" id="eclipses" data-module="eclipses.js">
+  <div class="text">
+    <p class="num">4</p>
+    <h2>Why isn't there an eclipse every month?</h2>
+    <p>Every month the Moon passes between us and the Sun (new Moon), and two weeks later it's on the far side of us (full Moon). So why don't we get a solar eclipse every new Moon, and a lunar eclipse every full Moon?</p>
+    <p>Because the Moon's orbit is <strong>tilted by about 5°</strong> compared with Earth's orbit around the Sun. Most months, the Moon slips just above or just below the Sun, and just above or below Earth's shadow.</p>
+    <p class="after">The two orbits cross at two points, the <em>nodes</em>. An eclipse needs a new or full Moon to happen <em>while the Sun lines up with the nodes</em>. That alignment comes round about every 173 days — the <strong>eclipse seasons</strong>. That's why eclipses come in pairs: a solar and a lunar eclipse often happen two weeks apart.</p>
+    <p class="after">The nodes themselves slowly turn, once every 18.6 years, so eclipse seasons drift through the calendar.</p>
+    <p class="try">Let the year run and watch for the flash. Then flatten the Moon's orbit to <button class="link" data-incl="0">0°</button> — eclipses every two weeks — and back to the real <button class="link" data-incl="5.145">5.1°</button>.</p>
+    <aside class="aha">
+      <p>Five degrees doesn't sound like much. But the Moon is 384,000 km away, so 5° moves it up to 35,000 km above or below the Sun–Earth line — while Earth's shadow there is only about 9,000 km wide. Usually it misses.</p>
+      <p>There's one more lucky coincidence: the Sun is about 400 times wider than the Moon, but also about 400 times farther away. That's why the Moon can <em>just</em> cover the Sun in a total eclipse.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="eclipse-canvas" class="panel-canvas medium" aria-label="The Moon's tilted orbit around Earth, with the direction to the Sun"></canvas>
+    <p class="scale-note"><b>Tilt to scale; sizes and distances not.</b> Earth and Moon drawn huge; the Sun is far off to the side, in the direction of the arrow. Drag to look from another angle.</p>
+    <canvas id="eclipse-timeline" class="panel-canvas chart" aria-label="New and full Moons over 18 months, with eclipses highlighted"></canvas>
+    <div class="controls">
+      <div class="timeline">
+        <button class="btn round" id="eclipse-play" aria-label="Pause">❚❚</button>
+        <span class="ctl-label" style="flex:1">≈ 3 weeks per second · slows for eclipses</span>
+        <output id="eclipse-date">—</output>
+      </div>
+      <label class="ctl">
+        <span class="ctl-label">Tilt of the Moon's orbit <output id="eclipse-incl-out"></output></span>
+        <input type="range" id="eclipse-incl" min="0" max="15" step="0.005" value="5.145">
+      </label>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">Solar eclipses / year</span><span class="ro-value" id="eclipse-solar">—</span></div>
+      <div><span class="ro-label">Lunar eclipses / year</span><span class="ro-value" id="eclipse-lunar">—</span></div>
+      <div><span class="ro-label">New Moons / year</span><span class="ro-value">12.4</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. FALLING SIDEWAYS ============ -->
+<section class="chapter" id="falling" data-module="falling.js">
+  <div class="text">
+    <p class="num">5</p>
+    <h2>An orbit is falling — and missing</h2>
+    <p>Why doesn't the Moon fall down? It does. It's falling towards Earth <em>right now</em>, and so is the International Space Station. They're just moving sideways so fast that they keep missing.</p>
+    <p>Isaac Newton imagined a cannon on a mountain so tall it pokes above the air. Fire slowly and the ball curves down and lands. Fire faster and it lands farther away. Fire fast enough and the ground curves away beneath it <strong>as fast as it falls</strong>. It never lands. That's an orbit.</p>
+    <p class="after">Near Earth's surface, the planet curves down about 5 metres for every 8 km you travel. And in one second, anything falls about 5 metres. So at about <strong>8 km per second</strong> sideways, falling and curving cancel out. Low orbits really are that fast: the ISS circles the Earth every 92 minutes.</p>
+    <p class="after">Astronauts float not because there's no gravity up there — at the ISS it's still about 90% as strong as on the ground — but because they and their station are falling together, all the time.</p>
+    <p class="try">Fire a few shots, faster each time. Try the <button class="link" data-v="7.67">ISS's speed</button>, then a bit faster, then <button class="link" data-v="11.1">escape speed</button>.</p>
+    <aside class="aha">
+      <p>Every path here is part of an <strong>ellipse</strong> (or, past escape speed, an open curve). Even the cannonball that lands is following an ellipse around Earth's centre — the ground just gets in the way.</p>
+      <p>The Moon does exactly the same thing, just slower (1 km/s) and farther out (384,000 km). And Earth does it around the Sun, at 30 km/s.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="fall-canvas" class="panel-canvas square" aria-label="Newton's cannon on a mountain above the atmosphere"></canvas>
+    <p class="scale-note"><b>To scale:</b> Earth, the 400 km "mountain" and the paths are all drawn at true proportions, zooming out as needed. Air resistance is left out (that's why the mountain is so tall).</p>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Launch speed, sideways <output id="fall-v-out"></output></span>
+        <input type="range" id="fall-v" min="0.5" max="12" step="0.01" value="5">
+      </label>
+      <div class="btn-row">
+        <button class="btn" id="fall-fire">Fire!</button>
+        <button class="btn ghost" id="fall-clear">Clear paths</button>
+      </div>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">Speed</span><span class="ro-value" id="fall-speed">—</span></div>
+      <div><span class="ro-label">What happens</span><span class="ro-value" id="fall-outcome">—</span></div>
+      <div><span class="ro-label">Time in flight</span><span class="ro-value" id="fall-time">—</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. KEPLER ============ -->
+<section class="chapter" id="kepler" data-module="kepler.js">
+  <div class="text">
+    <p class="num">6</p>
+    <h2>Kepler's three rules of the road</h2>
+    <p>Around 1609, Johannes Kepler pored over years of careful observations of Mars and found three rules that every orbit follows. Seventy years later, Newton showed they all come from one thing: gravity weakening with distance.</p>
+    <ul class="ingredients">
+      <li><b>Ellipses.</b> Orbits are ovals, with the Sun not in the middle but at one <em>focus</em>, off to the side.</li>
+      <li><b>Equal areas in equal times.</b> Closer in, a planet speeds up; far out, it slows down. A line from the Sun to the planet sweeps out equal areas in equal times.</li>
+      <li><b>Bigger orbit, slower year.</b> The square of the period grows with the cube of the distance. Far planets have farther to go <em>and</em> move more slowly.</li>
+    </ul>
+    <p class="after">Earth's orbit is very nearly a circle — just 1.7% off-centre — but even that shows: we move about 3% faster in January than in July. That's why, counting from equinox to equinox, the northern autumn-and-winter half of the year (September to March, 179 days) is about a week shorter than spring-and-summer (186 days).</p>
+    <p class="try">Stretch the orbit and watch the coloured slices: each takes the same time, so each has the same area. Try <button class="link" data-orbit="earth">Earth</button>, <button class="link" data-orbit="mercury">Mercury</button>, <button class="link" data-orbit="mars">Mars</button>, or <button class="link" data-orbit="halley">Halley's Comet</button>.</p>
+    <aside class="aha">
+      <p>Nothing pushes a planet along its orbit. It speeds up near the Sun for the same reason a ball speeds up rolling downhill — it's falling inward — and slows down climbing back out. An orbit is a never-ending trade between height and speed.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="kepler-canvas" class="panel-canvas square" aria-label="An elliptical orbit divided into slices of equal time"></canvas>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">How stretched (eccentricity) <output id="kepler-e-out"></output></span>
+        <input type="range" id="kepler-e" min="0" max="0.97" step="0.001" value="0.6">
+      </label>
+      <label class="ctl">
+        <span class="ctl-label">Size of the orbit <output id="kepler-a-out"></output></span>
+        <input type="range" id="kepler-a" min="0" max="1" step="0.001" value="0.4">
+      </label>
+    </div>
+    <div class="readout grid4">
+      <div><span class="ro-label">One orbit takes</span><span class="ro-value" id="kepler-T">—</span></div>
+      <div><span class="ro-label">Speed now</span><span class="ro-value" id="kepler-v">—</span></div>
+      <div><span class="ro-label">Distance now</span><span class="ro-value" id="kepler-r">—</span></div>
+      <div><span class="ro-label">Fastest ÷ slowest</span><span class="ro-value" id="kepler-ratio">—</span></div>
+    </div>
+    <canvas id="kepler-chart" class="panel-canvas chart" aria-label="Orbital period against distance for the planets"></canvas>
+  </div>
+</section>
+
+<!-- ============ 7. RETROGRADE ============ -->
+<section class="chapter" id="retrograde" data-module="retrograde.js">
+  <div class="text">
+    <p class="num">7</p>
+    <h2>Why Mars sometimes goes backwards</h2>
+    <p>Night after night, Mars drifts slowly eastward against the stars. But every couple of years it stops, <strong>goes backwards</strong> for about two months, stops again, and carries on. For more than a thousand years, astronomers built ever more complicated machinery of circles-on-circles to explain these loops.</p>
+    <p>The real explanation is that <strong>we're moving too</strong>. Earth is on an inside lane, going faster. Every 26 months we catch up with Mars and overtake it.</p>
+    <p class="after">It's like passing a slower car on the motorway: for a moment, against the distant hills, it seems to slide backwards — even though both cars are going forward. Nothing about Mars changes. Only our point of view does.</p>
+    <p class="try">Let it run and watch the sight line sweep across the background stars. Then switch to <em>seen from the Sun</em> — and the loops vanish.</p>
+    <aside class="aha">
+      <p>Mars goes backwards exactly when Earth overtakes it — which is also when it's closest and brightest in our sky (an <em>opposition</em>). The loop isn't in Mars's motion. It's in ours.</p>
+      <p>This is one of the oldest lessons in astronomy, and the theme of the next chapter: <strong>what you see depends on where you're watching from</strong>.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="retro-canvas" class="panel-canvas square" aria-label="Earth and Mars orbiting the Sun, with the line of sight from Earth to Mars"></canvas>
+    <canvas id="retro-sky" class="panel-canvas chart" aria-label="Mars's path against the background stars"></canvas>
+    <div class="controls">
+      <div class="timeline">
+        <button class="btn round" id="retro-play" aria-label="Pause">❚❚</button>
+        <span class="ctl-label" style="flex:1">≈ 3 weeks per second</span>
+        <output id="retro-date">—</output>
+      </div>
+      <div class="seg" id="retro-view"><button class="on" data-view="earth">Seen from Earth</button><button data-view="sun">Seen from the Sun</button></div>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">Mars appears to move</span><span class="ro-value" id="retro-dir">—</span></div>
+      <div><span class="ro-label">Distance Earth–Mars</span><span class="ro-value" id="retro-dist">—</span></div>
+      <div><span class="ro-label">Next overtaking</span><span class="ro-value" id="retro-next">—</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. HOW FAST ============ -->
+<section class="chapter" id="speed" data-module="speed.js">
+  <div class="text">
+    <p class="num">8</p>
+    <h2>How fast are you going? It depends who's asking</h2>
+    <p>Sit perfectly still. You are spinning with the Earth at up to 1,670 km/h. The Earth is carrying you around the Sun at <strong>107,000 km/h</strong>. The Sun is carrying all of us around the Milky Way at roughly <strong>830,000 km/h</strong> — one lap every 230 million years. And the whole galaxy is moving through the universe.</p>
+    <p>So what's your <em>real</em> speed? There isn't one. Every one of those numbers is true — each measured against something different. Speed only means something <strong>relative to something else</strong>.</p>
+    <p class="after">Why don't we feel any of it? Because you can't feel steady motion — only <em>changes</em> in motion. Our turns are so enormous that the changes are tiny. (It's the same reason you can pour a drink on a smoothly cruising plane.)</p>
+    <p class="after">The closest thing to a universal yardstick is the <em>cosmic microwave background</em>, the leftover glow of the Big Bang that fills all of space. Against it, the Sun moves at about 370 km/s (1.3 million km/h) towards the constellations Leo and Crater, and the Milky Way as a whole at about 600 km/s — over <strong>2 million km/h</strong>.</p>
+    <p class="after">You may have seen videos of the planets corkscrewing behind the Sun like the tail of a comet. The real picture is stranger and more beautiful. Earth's orbit is tilted about 60° to our path through the galaxy, and the coils are stretched out — each one is about 25 times longer than it is wide.</p>
+    <p class="try">Tap each motion to switch the frame of reference: Earth, Sun, galaxy, cosmic background. Same Earth, four completely different paths. In the galaxy view, try squeezing the coils.</p>
+    <aside class="aha">
+      <p>A circle, an ellipse, a stretched spring: these are all the same motion, described from different places. None of them is "the real one".</p>
+      <p>And the speeds don't simply add up: they point in different directions. Relative to the cosmic background, your total speed swings between about 340 and 400 km/s over a year, depending on whether Earth's orbit carries you with or against the Sun's motion. Satellites have measured this yearly wobble.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <div class="speed-rows" id="speed-rows">
+      <button class="speed-row on" data-frame="earth"><span class="sr-name">Spinning with the Earth</span><span class="sr-rel">around Earth's axis</span><span class="sr-v" id="sp-earth">—</span><span class="sr-d" id="sd-earth">—</span></button>
+      <button class="speed-row" data-frame="sun"><span class="sr-name">Orbiting the Sun</span><span class="sr-rel">around the Sun</span><span class="sr-v" id="sp-sun">—</span><span class="sr-d" id="sd-sun">—</span></button>
+      <button class="speed-row" data-frame="galaxy"><span class="sr-name">Circling the galaxy</span><span class="sr-rel">around the galaxy's centre</span><span class="sr-v" id="sp-galaxy">—</span><span class="sr-d" id="sd-galaxy">—</span></button>
+      <button class="speed-row" data-frame="cmb"><span class="sr-name">Through the universe</span><span class="sr-rel">vs the cosmic background</span><span class="sr-v" id="sp-cmb">—</span><span class="sr-d" id="sd-cmb">—</span></button>
+    </div>
+    <p class="scale-note">Distances: how far you've travelled since you opened this page.</p>
+    <canvas id="speed-canvas" class="panel-canvas square" aria-label="Earth's path in the chosen frame of reference"></canvas>
+    <p class="scale-note" id="speed-note"></p>
+    <div class="controls">
+      <div class="btn-row">
+        <button class="btn ghost" id="speed-squeeze">Squeeze the coils</button>
+        <button class="btn round" id="speed-play" aria-label="Pause">❚❚</button>
+      </div>
+      <label class="ctl" id="speed-lat-ctl">
+        <span class="ctl-label">Your latitude <output id="speed-lat-out"></output></span>
+        <input type="range" id="speed-lat" min="0" max="90" step="1" value="52">
+      </label>
+    </div>
+    <div class="readout big">
+      <span class="ro-label">Right now, all motions together, relative to the cosmic background</span>
+      <span class="ro-value" id="speed-total">—</span>
+      <span class="ro-note" id="speed-total-note"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. SUMMARY ============ -->
+<section class="summary" id="summary">
+  <h2>Motion is relative</h2>
+  <div class="cards four">
+    <div class="card"><h3>From Earth</h3><p>The Sun rises and sets, the Moon changes shape, Mars sometimes walks backwards.</p></div>
+    <div class="card"><h3>From the Sun</h3><p>Earth spins and leans as it circles. The seasons are its tilt; the phases are lighting angles; the loops are overtaking.</p></div>
+    <div class="card"><h3>From the galaxy</h3><p>The whole solar system sails along at 230 km/s, and Earth's yearly circle stretches into a long, slanted spring.</p></div>
+    <div class="card"><h3>From the cosmos</h3><p>Against the Big Bang's afterglow we move at 370 km/s — the nearest thing there is to a universal yardstick, though not a privileged one.</p></div>
+  </div>
+  <p class="closing">Every description is true, and none is the "real" one. Right now, sitting perfectly still, you're tracing a path through the universe that no one has ever travelled before — and you'll never pass this way again.</p>
+  <p class="foot">Made as a companion to <a href="https://mklasen.github.io/understanding-waves/">Understanding Waves</a>. Planet positions from J2000 mean orbital elements; coastlines from Natural Earth (public domain). Simplifications and sources are listed in <a href="DECISIONS.md">DECISIONS.md</a>.</p>
+</section>
+</main>
+
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

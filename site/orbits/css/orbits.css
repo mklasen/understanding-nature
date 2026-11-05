@@ -1,0 +1,69 @@
+/* orbits: explainer-specific styles (shared styles live in kit/kit.css) */
+.card.a { background: linear-gradient(160deg, rgba(245, 185, 90, 0.18), rgba(16, 21, 42, 0.92) 60%); }
+.card.b { background: linear-gradient(160deg, rgba(181, 156, 255, 0.18), rgba(16, 21, 42, 0.92) 60%); }
+.card.a h3 { color: var(--accent); }
+.card.b h3 { color: var(--earth); }
+/* ---------- orbits additions ---------- */
+.hero-caption p { margin: 0 0 8px; }
+.hero-note { color: rgba(255,255,255,0.7); font-size: 12.5px; }
+.hero-caption { max-width: 340px; }
+.btn.small { padding: 6px 12px; font-size: 13px; }
+.scale-note { font-size: 12.5px; color: var(--ink-dim); margin: -4px 0 0; }
+.scale-note b { color: var(--accent); font-weight: 600; }
+.ingredients li::before { content: "↻"; }
+
+/* speed table: each row is also the frame-of-reference switch */
+.speed-rows { display: flex; flex-direction: column; gap: 6px; }
+.speed-row {
+  display: grid; grid-template-columns: 1fr auto; grid-template-areas: "name v" "rel d"; gap: 0 12px;
+  text-align: left; font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 10px 14px; cursor: pointer; transition: border-color .2s, background .2s;
+}
+.speed-row:hover { border-color: rgba(245,185,90,0.5); }
+.speed-row.on { border-color: var(--accent); background: linear-gradient(135deg, rgba(245,185,90,0.16), rgba(245,185,90,0.03)); }
+.sr-name { grid-area: name; font-weight: 600; font-size: 15px; }
+.sr-rel { grid-area: rel; font-size: 12.5px; color: var(--ink-dim); }
+.sr-v { grid-area: v; font: 400 19px var(--serif); text-align: right; font-variant-numeric: tabular-nums; }
+.sr-d { grid-area: d; font-size: 12.5px; color: var(--accent); text-align: right; font-variant-numeric: tabular-nums; }
+.speed-row.on .sr-name::before { content: "● "; color: var(--accent); }
+
+.cards.four { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.cards.four .card { padding: 20px 20px; }
+.cards.four h3 { font-size: 22px; color: var(--accent); margin-bottom: 8px; }
+.cards.four p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+@media (max-width: 960px) { .cards.four { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .cards.four { grid-template-columns: 1fr; } .summary { padding: 56px 16px 60px; } }
+
+/* zoom overlay */
+.zoom-wrap { position: relative; }
+.zoom-wrap > canvas { touch-action: pan-y; }
+.zoom-ui { position: absolute; right: 10px; bottom: 10px; display: flex; gap: 6px; }
+.zoom-ui button {
+  width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.18); cursor: pointer;
+  background: rgba(5,7,15,0.65); color: #fff; font: 600 17px var(--sans); backdrop-filter: blur(6px);
+}
+.zoom-ui button:hover { border-color: var(--accent); }
+.zoom-ui .z-reset { font-size: 15px; }
+.hero .zoom-ui { display: none; }
+.hero .zoom-wrap { position: absolute; inset: 0; }
+
+.subhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+.subhead h3 { font: 400 24px var(--serif); margin: 0; }
+
+/* ---------- the shared viewer ---------- */
+.viewer { display: flex; flex-direction: column; gap: 8px; min-width: 0; max-width: 100%; }
+.stage, .viewer > *, .zoom-wrap { min-width: 0; max-width: 100%; }
+.viewer-views { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.viewer-views button {
+  flex: none; font: 500 13px var(--sans); color: var(--ink-soft); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 999px; padding: 7px 13px; cursor: pointer; white-space: nowrap;
+}
+.viewer-views button.on { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+.viewer-time { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.viewer-time output { font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; margin-right: auto; }
+.seg.small button { padding: 6px 10px; font-size: 12.5px; }
+.viewer .scale-note { margin: 0; }
+.hero .viewer, .hero .zoom-wrap { position: absolute; inset: 0; }
+.hero-caption .viewer-views { margin: 4px 0 8px; }
+.hero-caption .viewer-views button:not(.on) { background: rgba(5,7,15,0.5); }
+
