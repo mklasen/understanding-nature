@@ -3,6 +3,9 @@
 #   tools/browser-lock acquire <session-name>   # waits until free (stale locks expire after 15 min)
 #   tools/browser-lock release <session-name>
 #   tools/browser-lock status
+#   tools/browser-lock run <session-name> -- <browser args…>
+#       acquire-or-refresh, then run `browser <args…>`. Every call refreshes the lock, so it only
+#       goes stale after 15 min of *no browser use* — prefer this for long QA runs.
 LOCK=/tmp/browser-session.lock
 STALE=900
 cmd=${1:-status}; who=${2:-unknown}
@@ -17,6 +20,11 @@ case "$cmd" in
     echo "$who" > "$LOCK/owner"; echo "browser acquired by $who" ;;
   release)
     if [ "$(cat "$LOCK/owner" 2>/dev/null)" = "$who" ]; then rm -rf "$LOCK"; echo "browser released"; else echo "not held by $who (owner: $(cat "$LOCK/owner" 2>/dev/null || echo none))"; fi ;;
+  run)
+    shift 2; [ "${1:-}" = "--" ] && shift
+    "$0" acquire "$who" >/dev/null || exit 1
+    touch "$LOCK"
+    exec browser "$@" ;;
   status)
     if [ -d "$LOCK" ]; then echo "held by $(cat "$LOCK/owner") for $(age)s"; else echo "free"; fi ;;
 esac

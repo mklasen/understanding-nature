@@ -28,6 +28,8 @@ These are the house rules — for humans and for the Claude sessions that build 
   backwards-compatible, and mention them in the commit message.
 - Commit only your paths: `git add site/<id> && git commit -m "<id>: …"`.
 - Don't push or publish unless the user asks; publishing is done from the library session.
-- **The test browser is shared.** `tools/browser-lock acquire <session>` before using it,
-  `tools/browser-lock release <session>` when you pause. It runs ~1.5 fps and has no WebGL —
+- **The test browser is shared.** Drive it through `tools/browser-lock run <session> -- <browser args>`
+  (acquires the lock and refreshes it on every call), and `tools/browser-lock release <session>` when
+  you pause. A lock goes stale after 15 min without browser use. Full-page screenshots can time out
+  on pages with animated canvases — grabbing a canvas via `toDataURL` is reliable. It runs ~1.5 fps and has no WebGL —
   snap simulation state via `browser eval` for visual QA, and ship a Canvas2D fallback for WebGL.
