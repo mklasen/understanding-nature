@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding Weather — why does the wind blow?</title>
+<meta name="description" content="An interactive field guide to the weather. Heat a coastline and watch a sea breeze start, spin a storm, lift air until it makes a cloud.">
+<link rel="canonical" href="https://mklasen.github.io/understanding-nature/weather/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#08111f">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Understanding Nature">
+<meta property="og:title" content="Why does the wind blow? — Understanding Weather">
+<meta property="og:description" content="An interactive field guide to the weather: sea breezes, pressure, why storms spin, how clouds form, fronts and the planet's great wind belts.">
+<meta property="og:url" content="https://mklasen.github.io/understanding-nature/weather/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why does the wind blow? — Understanding Weather">
+<meta name="twitter:description" content="An interactive field guide to the weather.">
+<link rel="stylesheet" href="../kit/kit.css">
+<link rel="stylesheet" href="css/weather.css">
+</head>
+<body data-theme="sky" data-explainer="weather" data-root="../">
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <canvas id="hero-breeze" aria-label="A live simulation of the air over a coastline through the day"></canvas>
+  <div class="hero-copy">
+    <p class="kicker">An interactive field guide to the weather</p>
+    <h1>Why does<br>the wind blow?</h1>
+    <p class="lede">Air is always trying to even things out. The Sun keeps making that impossible. Heat a coastline, spin a storm, lift air until it turns into cloud — and see where the weather comes from.</p>
+  </div>
+  <p class="hero-caption">This is a <b>live fluid simulation</b> of the air over a coast, sea on the left, land on the right. Nobody told it to make a sea breeze. The Sun warms the land, and the air does the rest.<span class="hero-clock" id="hero-clock"></span></p>
+  <a class="scroll-cue" href="#breeze">Begin <span>↓</span></a>
+</header>
+
+<nav class="toc" aria-label="Chapters">
+  <a href="#breeze"><i>1</i>The sea breeze</a>
+</nav>
+
+<main>
+
+<!-- ============ 1. SEA BREEZE ============ -->
+<section class="chapter" id="breeze">
+  <div class="text">
+    <p class="num">1</p>
+    <h2>The Sun heats unevenly — and the air moves</h2>
+    <p>Stand on a beach on a sunny afternoon and you'll feel it: a cool wind blowing in off the sea, even when the morning was dead calm. Nobody switched it on. <strong>The Sun did.</strong></p>
+    <p>Sunlight warms the land fast. The sea hardly warms at all — water stores enormous amounts of heat and stirs it metres deep. So by mid-morning the air over the land is warmer, lighter, and starts to rise. Cooler, heavier air from over the sea slides in underneath to take its place. Up high, the air flows back out to sea and sinks. A loop.</p>
+    <p>That loop is the whole secret of wind: <strong>uneven heating makes uneven pressure, and air flows from high pressure to low</strong>. Every wind on Earth — from a beach breeze to a hurricane to the jet stream — is a version of this.</p>
+    <p class="try">Let the day run and watch the breeze switch on by itself around mid-morning. Then turn the sun down to thick cloud and start again at dawn. After sunset, watch it turn around.</p>
+    <aside class="aha" id="breeze-aha">
+      <p>The sea breeze is a heat engine you can feel on your face. Warm air rising over land is the "low"; cool sea air is the "high"; the wind is air flowing from one to the other.</p>
+      <p>At night the land cools faster than the sea and the whole thing runs backwards — a gentle <strong>land breeze</strong> blowing out to sea. Fishing boats used it for millennia: out at dawn on the land breeze, home in the afternoon on the sea breeze.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="breeze-canvas" class="panel-canvas tall" aria-label="Cross-section of the air over a coastline, sea on the left and land on the right"></canvas>
+    <p class="legend"><span><i class="warm"></i>warmer air</span><span><i class="cool"></i>cooler air</span><span>white streaks: the air itself, moving</span><span>H / L: pressure at the ground</span></p>
+    <div class="stage-bar">
+      <div class="seg small" id="breeze-speed" role="group" aria-label="Speed">
+        <button data-speed="slow">Slow</button><button data-speed="normal" class="on">1 day ≈ 1 min</button><button data-speed="fast">Fast</button>
+      </div>
+      <button class="btn ghost small" id="breeze-dawn">Start at dawn</button>
+      <button class="btn round" id="breeze-play" aria-label="Pause">❚❚</button>
+    </div>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Sunshine <output id="breeze-sun-out"></output></span>
+        <input type="range" id="breeze-sun" min="0.1" max="1.5" step="0.05" value="1">
+      </label>
+      <label class="toggle"><input type="checkbox" id="breeze-temp" checked><span>Show air temperature</span></label>
+    </div>
+    <div class="readout grid4">
+      <div><span class="ro-label">Air over land</span><span class="ro-value" id="breeze-land">–</span></div>
+      <div><span class="ro-label">Air over sea</span><span class="ro-value" id="breeze-sea">–</span></div>
+      <div><span class="ro-label">Wind on the beach</span><span class="ro-value small" id="breeze-wind">–</span></div>
+      <div><span class="ro-label">Pressure</span><span class="ro-value small" id="breeze-dp">–</span></div>
+    </div>
+    <p class="why" id="breeze-why"></p>
+  </div>
+</section>
+
+</main>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

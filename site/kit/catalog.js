@@ -39,6 +39,10 @@ export const EXPLAINERS = [
     title: 'Understanding Weather', short: 'Wind, clouds & storms',
     hook: 'Why does the wind blow?',
     blurb: 'Pressure, sea breezes, why storms spin, and how clouds form.',
+    chapters: {
+      breeze: 'The sea breeze', pressure: 'Highs and lows', spin: 'Why storms spin', friction: 'Friction and gusts',
+      clouds: 'How clouds form', fronts: 'Fronts and rain', global: 'The global engine', summary: 'Weather vs climate',
+    },
   },
   {
     id: 'light', path: 'light/', status: 'building', category: 'light', theme: 'light',
@@ -67,4 +71,8 @@ export const XLINKS = [
   { from: 'orbits', chapter: 'moon', x: 'waves#tides', text: 'The Moon also stretches the oceans into tides' },
   { from: 'orbits', chapter: 'day', x: 'waves#tides', text: "Earth's spin under the Moon gives us two tides a day" },
   { from: 'orbits', chapter: 'seasons', x: 'weather', text: 'How the seasons drive the weather' },
+  { from: 'weather', chapter: 'spin', x: 'orbits#day', text: 'The spinning Earth underneath the wind' },
+  { from: 'weather', chapter: 'friction', x: 'waves#wind', text: 'What the wind does to the sea' },
+  { from: 'weather', chapter: 'clouds', x: 'light', text: 'Why are clouds white, and the sky blue?' },
+  { from: 'weather', chapter: 'global', x: 'orbits#seasons', text: 'Why the Sun shifts north and south through the year' },
 ];
