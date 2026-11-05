@@ -51,6 +51,39 @@ export class SeaBreeze {
     return -this.Hnight * (0.4 + 0.6 * Math.min(1, this.sun)); // clear nights cool harder
   }
   // ---- sine-transform Poisson solver ----
+  // Fast DST-I of two real rows at once: odd-extend both to length 2N, put one in the real part
+  // and one in the imaginary part, FFT. Each odd extension has a purely imaginary transform
+  // (−2i·X), so Re(Z) = 2·X_b and Im(Z) = −2·X_a. O(N log N) instead of O(N²).
+  _fftInit(n2) {
+    this.n2 = n2; this.re = new Float64Array(n2); this.im = new Float64Array(n2);
+    this.rev = new Uint32Array(n2); const bits = Math.log2(n2);
+    for (let i = 0; i < n2; i++) { let r = 0; for (let b = 0; b < bits; b++) r |= ((i >> b) & 1) << (bits - 1 - b); this.rev[i] = r; }
+    this.cosT = new Float64Array(n2 / 2); this.sinT = new Float64Array(n2 / 2);
+    for (let i = 0; i < n2 / 2; i++) { this.cosT[i] = Math.cos((2 * Math.PI * i) / n2); this.sinT[i] = -Math.sin((2 * Math.PI * i) / n2); }
+  }
+  _fft() {
+    const { n2, re, im, rev, cosT, sinT } = this;
+    for (let i = 0; i < n2; i++) { const j = rev[i]; if (j > i) { let t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; } }
+    for (let size = 2; size <= n2; size <<= 1) {
+      const half = size >> 1, step = n2 / size;
+      for (let st = 0; st < n2; st += size) for (let j = 0, t = 0; j < half; j++, t += step) {
+        const a = st + j, b = a + half, wr = cosT[t], wi = sinT[t];
+        const xr = re[b] * wr - im[b] * wi, xi = re[b] * wi + im[b] * wr;
+        re[b] = re[a] - xr; im[b] = im[a] - xi; re[a] += xr; im[a] += xi;
+      }
+    }
+  }
+  // rows A and B (length M = N−1, read via getters) → DST-I coefficients written via setters
+  _dstPair(getA, getB, setA, setB, M) {
+    const { re, im } = this, N = M + 1, n2 = 2 * N;
+    re[0] = im[0] = re[N] = im[N] = 0;
+    for (let i = 1; i < N; i++) {
+      const a = getA(i - 1), b = getB ? getB(i - 1) : 0;
+      re[i] = a; im[i] = b; re[n2 - i] = -a; im[n2 - i] = -b;
+    }
+    this._fft();
+    for (let m = 1; m < N; m++) { setA(m - 1, -im[m] / 2); if (setB) setB(m - 1, re[m] / 2); }
+  }
   _dst() {
     const { nx, nz, dx, dz } = this, M = nx - 1;
     this.S = new Float64Array(M * M);
@@ -59,31 +92,55 @@ export class SeaBreeze {
     for (let m = 1; m <= M; m++) this.lam[m - 1] = -(2 - 2 * Math.cos(Math.PI * m / nx)) / (dx * dx);
     this.Zh = new Float64Array(M * (nz + 1));
     this.cp_ = new Float64Array(nz + 1); this.dp_ = new Float64Array(nz + 1);
+    this.fast = Number.isInteger(Math.log2(2 * nx));
+    if (this.fast) this._fftInit(2 * nx);
   }
   solvePoisson() {
+    // layout: Zh[k*M + m] so both transforms are contiguous dot products (S is symmetric)
     const { nx, nz, dz, S, lam, Zh, zeta, psi } = this, M = nx - 1, W = nx + 1;
-    for (let k = 1; k < nz; k++) for (let m = 0; m < M; m++) {
-      let s = 0; const row = m * M;
-      for (let i = 0; i < M; i++) s += zeta[k * W + i + 1] * S[row + i];
-      Zh[m * (nz + 1) + k] = (2 / nx) * s;
+    if (this.fast) {
+      const sc = 2 / nx;
+      for (let k = 1; k < nz; k += 2) {
+        const kb = k + 1 < nz ? k + 1 : 0;
+        this._dstPair((i) => zeta[k * W + 1 + i], kb ? (i) => zeta[kb * W + 1 + i] : null,
+          (m, v) => { Zh[k * M + m] = sc * v; }, kb ? (m, v) => { Zh[kb * M + m] = sc * v; } : null, M);
+      }
+    } else for (let k = 1; k < nz; k++) {
+      const zr = k * W + 1, out = k * M;
+      for (let m = 0; m < M; m++) {
+        let s = 0; const row = m * M;
+        for (let i = 0; i < M; i++) s += zeta[zr + i] * S[row + i];
+        Zh[out + m] = (2 / nx) * s;
+      }
     }
     // per mode: (Ψk+1 − 2Ψk + Ψk−1)/dz² + λΨk = Zk,  Ψ0 = Ψnz = 0
     const a = 1 / (dz * dz), c = this.cp_, d = this.dp_;
     for (let m = 0; m < M; m++) {
-      const bdiag = -2 * a + lam[m], base = m * (nz + 1);
-      c[1] = a / bdiag; d[1] = Zh[base + 1] / bdiag;
+      const bdiag = -2 * a + lam[m];
+      c[1] = a / bdiag; d[1] = Zh[M + m] / bdiag;
       for (let k = 2; k < nz; k++) {
         const den = bdiag - a * c[k - 1];
-        c[k] = a / den; d[k] = (Zh[base + k] - a * d[k - 1]) / den;
+        c[k] = a / den; d[k] = (Zh[k * M + m] - a * d[k - 1]) / den;
       }
-      Zh[base + nz - 1] = d[nz - 1];
-      for (let k = nz - 2; k >= 1; k--) Zh[base + k] = d[k] - c[k] * Zh[base + k + 1];
+      Zh[(nz - 1) * M + m] = d[nz - 1];
+      for (let k = nz - 2; k >= 1; k--) Zh[k * M + m] = d[k] - c[k] * Zh[(k + 1) * M + m];
     }
     psi.fill(0);
-    for (let k = 1; k < nz; k++) for (let i = 0; i < M; i++) {
-      let s = 0;
-      for (let m = 0; m < M; m++) s += Zh[m * (nz + 1) + k] * S[m * M + i];
-      psi[k * W + i + 1] = s;
+    if (this.fast) {
+      for (let k = 1; k < nz; k += 2) {
+        const kb = k + 1 < nz ? k + 1 : 0;
+        this._dstPair((m) => Zh[k * M + m], kb ? (m) => Zh[kb * M + m] : null,
+          (i, v) => { psi[k * W + 1 + i] = v; }, kb ? (i, v) => { psi[kb * W + 1 + i] = v; } : null, M);
+      }
+      return;
+    }
+    for (let k = 1; k < nz; k++) {
+      const zr = k * M, pr = k * W + 1;
+      for (let i = 0; i < M; i++) {
+        let s = 0; const row = i * M;
+        for (let m = 0; m < M; m++) s += Zh[zr + m] * S[row + m];
+        psi[pr + i] = s;
+      }
     }
   }
   velocities() {

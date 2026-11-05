@@ -6,4 +6,7 @@ initLibrary();
 bootChapters((f) => import(`./${f}`), [
   ['hero.js', 'initHero'],
   ['breeze.js', 'initBreeze'],
+  ['pressure.js', 'initPressure'],
+  ['spin.js', 'initSpin'],
+  ['friction.js', 'initFriction'],
 ]);

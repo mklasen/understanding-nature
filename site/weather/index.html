@@ -35,6 +35,9 @@
 
 <nav class="toc" aria-label="Chapters">
   <a href="#breeze"><i>1</i>The sea breeze</a>
+  <a href="#pressure"><i>2</i>Highs and lows</a>
+  <a href="#spin"><i>3</i>Why storms spin</a>
+  <a href="#friction"><i>4</i>Friction and gusts</a>
 </nav>
 
 <main>
@@ -77,6 +80,122 @@
       <div><span class="ro-label">Pressure</span><span class="ro-value small" id="breeze-dp">–</span></div>
     </div>
     <p class="why" id="breeze-why"></p>
+  </div>
+</section>
+
+<!-- ============ 2. PRESSURE ============ -->
+<section class="chapter" id="pressure">
+  <div class="text">
+    <p class="num">2</p>
+    <h2>Highs, lows, and the slope in between</h2>
+    <p>You live at the bottom of an ocean of air. About ten tonnes of it press down on every square metre of you — that weight is <strong>air pressure</strong>, around 1013 hectopascals (hPa) at sea level.</p>
+    <p>It is never quite even. Where air is sinking or piling up, the pressure is a little higher: a <strong>high</strong>. Where it is warming and rising, or being drawn away aloft, the pressure is a little lower: a <strong>low</strong>. The differences are tiny — a deep storm is only 3–5% below normal — but air feels them, and slides from high towards low like water running downhill.</p>
+    <p>Weather maps draw this slope as <strong>isobars</strong>: lines joining places with the same pressure, like contour lines on a hiking map. Where they crowd together, the slope is steep and the push is strong.</p>
+    <p class="try">Pull the high and the low closer together, or deepen the difference, and watch the isobars squeeze and the air speed up. Notice where the air ends up: piling into the low, with nowhere to go but up.</p>
+    <aside class="aha" id="pressure-aha">
+      <p><strong>Wind is air flowing down a pressure slope.</strong> The closer the isobars, the steeper the slope, the stronger the wind. Forecasters read a weather map exactly like this.</p>
+      <p>But look at a real map and you'll see something odd: the wind blows almost <em>along</em> the isobars, not across them — and lows last for days instead of filling up in hours. Something is pushing the air sideways…</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="pressure-canvas" class="panel-canvas tall" aria-label="A weather map with a high, a low, isobars, and air flowing from the high into the low"></canvas>
+    <div class="controls three">
+      <label class="ctl">
+        <span class="ctl-label">Distance high → low <output id="pressure-dist-out"></output></span>
+        <input type="range" id="pressure-dist" min="500" max="2400" step="50" value="1200">
+      </label>
+      <label class="ctl">
+        <span class="ctl-label">Pressure difference <output id="pressure-diff-out"></output></span>
+        <input type="range" id="pressure-diff" min="4" max="50" step="2" value="24">
+      </label>
+      <div class="btn-row" style="align-self:end"><button class="btn ghost small" id="pressure-clear">Clear the air</button></div>
+    </div>
+    <div class="readout grid3">
+      <div><span class="ro-label">Slope halfway</span><span class="ro-value small" id="pressure-grad">–</span></div>
+      <div><span class="ro-label">Push on the air</span><span class="ro-value small" id="pressure-push">–</span></div>
+      <div><span class="ro-label">Real wind on such a map</span><span class="ro-value small" id="pressure-real">–</span></div>
+    </div>
+    <p class="why" id="pressure-why"></p>
+    <p class="ctl-note">Push = pressure slope ÷ air density. With nothing to stop it, air would gain that much speed every hour. "Real wind" is what that slope gives on an actual map at 50° latitude, after chapter 3's twist and friction.</p>
+  </div>
+</section>
+
+<!-- ============ 3. SPIN ============ -->
+<section class="chapter" id="spin">
+  <div class="text">
+    <p class="num">3</p>
+    <h2>Why storms spin</h2>
+    <p>The ground under you is turning. At 50° latitude it carries you east at about 1,000 km/h, and — less obviously — it slowly rotates around the spot you stand on, like a very slow merry-go-round: once a day at the poles, not at all at the equator.</p>
+    <p>Roll a ball straight across a spinning merry-go-round and, to anyone riding it, the ball curves away. Nothing pushed it sideways; the floor turned underneath. Air moving across the spinning Earth does the same: in the northern hemisphere it veers <strong>right</strong>, in the southern hemisphere <strong>left</strong>. This is the <strong>Coriolis effect</strong>, and its strength is <em>f</em> = 2Ω sin(latitude).</p>
+    <p>So air aiming for a low never gets there directly. It is turned aside, again and again, until it is circling the low — <strong>anticlockwise in the north, clockwise in the south</strong>. That is every cyclone, hurricane and typhoon on Earth.</p>
+    <p class="try">Roll the ball, then switch to riding the merry-go-round. On the map, slide from the north pole to the south and back — or jump to <button class="link" data-lat="0">the equator</button>, <button class="link" data-lat="52">Amsterdam</button>, <button class="link" data-lat="-34">Sydney</button>. Then switch friction to "high up" and watch the air stop falling in.</p>
+    <aside class="aha" id="spin-aha">
+      <p>High up, the inward push and the Coriolis turn balance, and air flows <strong>along the isobars</strong> (the <em>geostrophic wind</em>). That's why lows last for days: the spin keeps the air from filling them.</p>
+      <p>Near the ground friction spoils the balance, so the air <strong>spirals in</strong> — and in the middle it has to rise. Rising air makes cloud (chapter 5). That's why a low means rain.</p>
+      <p class="ctl-note">And no — the Coriolis effect doesn't decide which way your sink drains. Over a few centimetres and seconds it's millions of times too weak; the shape of the sink wins.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="spin-turntable" class="panel-canvas" style="height:clamp(220px,30vh,300px)" aria-label="A ball rolling across a spinning merry-go-round"></canvas>
+    <div class="stage-bar">
+      <div class="seg small" id="spin-frame" role="group" aria-label="Point of view">
+        <button data-frame="ground" class="on">From the ground</button><button data-frame="disc">Riding it</button>
+      </div>
+      <button class="btn small" id="spin-roll">Roll the ball</button>
+    </div>
+    <canvas id="spin-canvas" class="panel-canvas tall" aria-label="Weather map: air released around a low is deflected by Earth's spin"></canvas>
+    <div class="controls">
+      <label class="ctl">
+        <span class="ctl-label">Latitude <output id="spin-lat-out"></output></span>
+        <input type="range" id="spin-lat" min="-80" max="80" step="1" value="50">
+      </label>
+    </div>
+    <div class="stage-bar">
+      <div class="seg small" id="spin-fric" role="group" aria-label="Friction">
+        <button data-f="aloft">High up (no friction)</button><button data-f="sea" class="on">Over sea</button><button data-f="land">Over land</button>
+      </div>
+      <button class="btn small" id="spin-release">Release air</button>
+    </div>
+    <div class="readout grid4">
+      <div><span class="ro-label">Spin</span><span class="ro-value small" id="spin-dir">–</span></div>
+      <div><span class="ro-label">Coriolis strength f</span><span class="ro-value small" id="spin-f">–</span></div>
+      <div><span class="ro-label">Balanced wind</span><span class="ro-value small" id="spin-vg">–</span></div>
+      <div><span class="ro-label">Angle across isobars</span><span class="ro-value small" id="spin-angle">–</span></div>
+    </div>
+    <p class="why" id="spin-why"></p>
+  </div>
+</section>
+
+<!-- ============ 4. FRICTION ============ -->
+<section class="chapter" id="friction">
+  <div class="text">
+    <p class="num">4</p>
+    <h2>Friction: slow, gusty and twisted near the ground</h2>
+    <p>Climb a tower, a hill or a wind turbine and the wind gets stronger with every metre. The ground drags on the air: grass a little, forests and cities a lot. The lowest air is held back; the air above it is held back by <em>that</em> air, and so on up — a few hundred metres of slowed, tumbling air called the <strong>boundary layer</strong>.</p>
+    <p>The drag doesn't just slow the wind, it churns it. Air tripping over trees and rooftops rolls into eddies, and those eddies are what you feel as <strong>gusts</strong>. Over the smooth sea there's little to trip on, so sea winds are stronger and steadier — which is why the windiest places are coasts, islands and hilltops, and why wind farms go offshore.</p>
+    <p>Friction also explains chapter 3's spiral: slower air feels a weaker Coriolis turn, so near the ground the wind cuts across the isobars toward the low.</p>
+    <p class="try">Keep the same wind aloft and switch from sea to city. Watch the wind near the ground fade — and the gusts grow.</p>
+    <aside class="aha" id="friction-aha">
+      <p>The same weather system gives very different winds depending on what's underneath it. Over the sea the wind near the surface keeps about 70% of its speed aloft; over a city barely a quarter — but in sudden, much stronger gusts.</p>
+    </aside>
+  </div>
+  <div class="stage">
+    <canvas id="friction-canvas" class="panel-canvas tall" aria-label="Side view: wind speed increasing with height above different surfaces"></canvas>
+    <div class="seg small" id="friction-surf" role="group" aria-label="Surface">
+      <button data-s="sea">Sea</button><button data-s="grass" class="on">Grassland</button><button data-s="forest">Forest</button><button data-s="city">City</button>
+    </div>
+    <label class="ctl">
+      <span class="ctl-label">Wind above the boundary layer <output id="friction-g-out"></output></span>
+      <input type="range" id="friction-g" min="4" max="35" step="0.5" value="15">
+    </label>
+    <canvas id="friction-gusts" class="panel-canvas chart" aria-label="Wind speed at 10 metres over ten minutes, showing gusts"></canvas>
+    <div class="readout grid4">
+      <div><span class="ro-label">Wind at 10 m</span><span class="ro-value" id="friction-u10">–</span></div>
+      <div><span class="ro-label">Wind up high</span><span class="ro-value" id="friction-top">–</span></div>
+      <div><span class="ro-label">Peak gusts</span><span class="ro-value" id="friction-gust">–</span></div>
+      <div><span class="ro-label">Turned toward low</span><span class="ro-value" id="friction-angle">–</span></div>
+    </div>
+    <p class="why" id="friction-why"></p>
   </div>
 </section>
 
